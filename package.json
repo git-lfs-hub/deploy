@@ -1,20 +1,16 @@
 {
   "name": "@git-lfs-hub/deploy",
-  "type": "module",
   "private": true,
   "packageManager": "bun@1.3.13",
   "scripts": {
-    "dev": "docmd dev",
-    "build": "docmd build"
+    "dev": "TODO",
+    "build": "just build"
   },
+  "workspaces": [
+    "docs",
+    "server"
+  ],
   "devDependencies": {
-    "@docmd/core": "^0.8.0",
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "handlebars": "^4.7.9"
+    "turbo": "^2.9.12"
   }
 }

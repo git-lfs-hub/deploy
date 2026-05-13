@@ -1,0 +1,26 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {},
+    "@git-lfs-hub/docs#build": {
+      "outputs": ["$TURBO_EXTENDS$", "site/**"]
+    },
+    "//#build": {
+      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "inputs": ["docs/site/**", "justfile"],
+      "outputs": ["server/public/**"]
+    },
+    "@git-lfs-hub/server#build": {
+      "dependsOn": ["//#build"],
+      "outputs": ["dist/**"]
+    },
+    "test": {},
+    "dev": {
+      "dependsOn": ["//#build"],
+      "cache": false,
+      "persistent": true
+    },
+    "@git-lfs-hub/server#deploy": { "dependsOn": ["//#build"], "cache": false }
+  }
+}

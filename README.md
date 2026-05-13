@@ -8,13 +8,19 @@ Built with [`@docmd/core`](https://github.com/nicholasgasior/docmd).
 
 ```sh
 bun install
-bun run dev
+turbo dev
 ```
 
 ## Build
 
 ```sh
-bun run build
+turbo build
+```
+
+## Test
+
+```sh
+turbo test
 ```
 
 ## Configuration

@@ -1,5 +1,7 @@
 [tools]
 bun = "latest"
+just = "latest"
+node = "latest"
 
 [env]
 _.file = '.env'
