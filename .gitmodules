@@ -2,3 +2,7 @@
 	path = server
 	url = git@github.com:git-lfs-hub/server.git
 	branch = main
+[submodule "docs"]
+	path = docs
+	url = git@github.com:git-lfs-hub/docs.git
+	branch = main
