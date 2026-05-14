@@ -1,6 +1,5 @@
 [tools]
 bun = "latest"
-just = "latest"
 node = "latest"
 
 [env]
