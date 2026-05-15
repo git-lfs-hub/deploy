@@ -1,8 +1,7 @@
-name: Deploy
+name: PR
 
 on:
-  push:
-    branches: ["main"]
+  pull_request:
 
   workflow_dispatch: # Can run this workflow manually from the Actions tab
 
@@ -12,8 +11,8 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
 jobs:
-  deploy:
-    name: "Run"
+  test:
+    name: "Test"
     runs-on: linux_4_core_arm # ubuntu-latest
 
     steps:
@@ -23,6 +22,5 @@ jobs:
       - name: Initialize
         uses: ./.github/actions/init
       - run: bunx turbo run test build
-      - run: bunx turbo run deploy
       - name: Turbo Summary
         uses: ./.github/actions/turbo-summary
