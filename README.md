@@ -53,6 +53,12 @@ wrangler secret put GITHUB_CLIENT_SECRET
 wrangler secret put LOGIN_SECRET        # openssl rand -hex 32
 ```
 
+Optionally:
+
+```sh
+wrangler secret put SENTRY_DSN # get from Sentry 
+```
+
 See `server/README.md` for full setup instructions (R2 bucket, GitHub OAuth App registration).
 
 Docs site variables (title, org URL, LFS server hostname) live in `docs/vars.json`.

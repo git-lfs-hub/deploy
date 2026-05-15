@@ -4,7 +4,8 @@
   "packageManager": "bun@1.3.13",
   "scripts": {
     "types": "turbo types",
-    "link": "scripts/link.sh",
+    "sync:docs": "scripts/sync-docs.sh",
+    "sync:server": "scripts/sync-server.sh",
     "test": "turbo test",
     "test:watch": "turbo test-watch",
     "dev": "turbo dev",

@@ -1,6 +1,12 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "ui": "tui",
+  "futureFlags": {
+    "globalConfiguration": true
+  },
+  "global": {
+    "ui": "tui",
+    "inputs": ["*.js*", "*.mjs", "*.ts", "!*.md", "!*.example"]
+  },
   "tasks": {
     "types": {},
     "test": {},
@@ -8,20 +14,36 @@
     "dev": { "cache": false, "persistent": true },
     "build": {},
     "deploy": {},
+    "//#sync:docs": {
+      "inputs": ["assets/**"],
+      "outputs": ["docs/vars.json", "docs/assets/**"]
+    },
     "@git-lfs-hub/docs#build": {
+      "dependsOn": ["//#sync:docs"],
       "outputs": ["site/**"]
     },
-    "//#link": {
+    "//#sync:server": {
       "dependsOn": ["@git-lfs-hub/docs#build"],
-      "inputs": ["docs/site/**", "justfile"],
-      "outputs": ["server/public/**"]
+      "inputs": ["docs/site/**"],
+      "outputs": [
+        "server/wrangler.jsonc",
+        "server/worker-configuration.d.ts",
+        "server/public/**"
+      ]
     },
-    "@git-lfs-hub/server#test": { "dependsOn": ["//#link"] },
-    "@git-lfs-hub/server#test:watch": { "dependsOn": ["//#link"] },
+    "@git-lfs-hub/server#test": {
+      "dependsOn": ["//#sync:server"],
+      "inputs": ["$TURBO_DEFAULT$", "!docs/**", "!public/**"]
+    },
+    "@git-lfs-hub/server#test:watch": { "dependsOn": ["//#sync:server"] },
     "@git-lfs-hub/server#build": {
-      "dependsOn": ["//#link"],
+      "dependsOn": ["//#sync:server"],
+      "inputs": ["$TURBO_DEFAULT$", "!docs/**", "!test/**"],
       "outputs": ["dist/**"]
     },
-    "@git-lfs-hub/server#deploy": { "dependsOn": ["//#link"], "cache": false }
+    "@git-lfs-hub/server#deploy": {
+      "dependsOn": ["//#sync:server"],
+      "cache": false
+    }
   }
 }
