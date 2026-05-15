@@ -43,6 +43,7 @@
     },
     "@git-lfs-hub/server#deploy": {
       "dependsOn": ["//#sync:server"],
+      "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
     }
   }
