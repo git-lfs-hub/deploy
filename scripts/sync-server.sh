@@ -4,5 +4,9 @@ cd "$(dirname "$0")/.."
 
 # Update turbo.json whenever changing theese
 
-rsync -avh wrangler.jsonc worker-configuration.d.ts server/
+pushd server > /dev/null
+ln -sf ../wrangler.jsonc ./
+ln -sf ../worker-configuration.d.ts ./
+popd > /dev/null
+
 rsync -avh docs/site/ server/public

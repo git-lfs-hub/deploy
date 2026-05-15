@@ -14,7 +14,7 @@ env:
 jobs:
   deploy:
     name: "Deploy"
-    runs-on: linux_4_core_arm # ubuntu-latest
+    runs-on: { group: "Linux" }
 
     steps:
       - uses: actions/checkout@v6
