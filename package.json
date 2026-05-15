@@ -17,6 +17,6 @@
     "server"
   ],
   "devDependencies": {
-    "turbo": "^2.9.12"
+    "turbo": "^2.9.14"
   }
 }
