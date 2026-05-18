@@ -14,7 +14,7 @@ if [ -z "$CI" ]; then
 else
     # copy in CI because turbo doesn't restore symlinks from cache
     rsync -avh ../wrangler.jsonc ./
-    rsync -avh ../worker-configuration.d.ts ./
+    # rsync -avh ../worker-configuration.d.ts ./
     rsync -avh ../vars.resolved.json vars.json
     rsync -avh ../docs/site/ public
 fi
