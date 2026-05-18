@@ -35,7 +35,7 @@ For a personal account:
 ```json
 {
   "org": "My Name",
-  "github": { "users": "my-github-login", "owners": "my-github-login" },
+  "github": { "user": "my-github-login" },
   "cloudflare": { "accountId": "...", "accountSlug": "..." }
 }
 ```
@@ -44,11 +44,10 @@ For a personal account:
 |-----|-------------|
 | `cloudflare.accountSlug` | Sets the Worker URL prefix (`GITHUB_APP_HOME`) |
 | `cloudflare.accountId` | Sets the R2 endpoint URL (`S3_ENDPOINT`) |
-| `github.org[s]` | Active org members get access; up to 5 orgs total |
-| `github.users` | Restricts access to specific logins (on top of org check) |
-| `github.owners` | Owner slugs accepted in LFS URLs; overrides `github.org[s]` for routing but not access |
+| `github.org[s]` | Org mode — active members of up to 5 orgs get access |
+| `github.user` | User mode — single GitHub login gets access (mutually exclusive with `github.org[s]`) |
 
-List values (`github.orgs`, `github.users`, `github.owners`) accept a JSON array or a space/comma-separated string.
+`github.orgs` accepts a JSON array or a space/comma-separated string.
 
 **2. Render config artifacts:**
 

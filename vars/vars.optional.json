@@ -1,8 +1,7 @@
 {
   "github": {
     "org": "",
-    "users": "",
-    "owners": "",
+    "user": "",
     "orgs": ""
   },
   "sentry": { "org": "" }

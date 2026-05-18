@@ -57,14 +57,8 @@ describe("resolveVars", () => {
     const vars = resolveVars({}, {});
     const gh = vars.github as Record<string, unknown>;
     expect(gh.org).toBe("");
-    expect(gh.users).toBe("");
-    expect(gh.owners).toBe("");
+    expect(gh.user).toBe("");
     expect(gh.orgs).toBe("");
-  });
-
-  test("optional var overridden by user array is normalized to space-separated", () => {
-    const vars = resolveVars({ github: { users: ["alice", "bob"] } }, {});
-    expect((vars.github as Record<string, unknown>).users).toBe("alice bob");
   });
 
   test("user vars take precedence over defaults in final merge", () => {
