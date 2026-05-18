@@ -15,8 +15,13 @@
     "build": {},
     "deploy": {},
     "vars#init": {
+      // Relative to vars/
       "inputs": ["**", "../vars.json", "../server/*.template.*"],
-      "outputs": ["../vars.resolved.json", "../github-app.md"]
+      "outputs": [
+        "../vars.resolved.json",
+        "../github-app.md",
+        "../wrangler.jsonc"
+      ]
     },
     "//#sync:docs": {
       "dependsOn": ["vars#init"],
