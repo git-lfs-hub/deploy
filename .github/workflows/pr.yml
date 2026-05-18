@@ -6,8 +6,8 @@ on:
   workflow_dispatch: # Can run this workflow manually from the Actions tab
 
 env:
-  TURBO_TEAM: ${{ env.TURBO_TEAM || vars.TURBO_TEAM }}
-  TURBO_TEAMID: ${{ env.TURBO_TEAMID || vars.TURBO_TEAMID }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  TURBO_TEAMID: ${{ vars.TURBO_TEAMID }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
 jobs:
