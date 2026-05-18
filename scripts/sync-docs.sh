@@ -4,5 +4,8 @@ cd "$(dirname "$0")/.."
 
 # Update turbo.json whenever changing theese
 
-rsync -avh vars.json docs/
+pushd docs > /dev/null
+ln -sf ../vars.resolved.json vars.json
+popd > /dev/null
+
 rsync -avh assets/ docs/assets

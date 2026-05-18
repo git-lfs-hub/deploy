@@ -1,5 +1,6 @@
 [tools]
 bun = "latest"
+gomplate = "latest"
 node = "latest"
 
 [env]
