@@ -39,9 +39,21 @@ export function loadInputVars(path: string): Record<string, unknown> {
 
 /** Merges vars.json contents with defaults and normalizes array values. */
 export function normalizeVars(raw: Record<string, unknown>): Record<string, unknown> {
-  return Object.fromEntries(
+  const result = Object.fromEntries(
     Object.entries(deepMerge(optionalVars, raw)).map(([k, v]) => [k, normalizeValue(v)]),
   );
+  const gh = result.github as Record<string, unknown> | undefined;
+  if (gh) {
+    const user = gh.user as string;
+    if (user) {
+      gh.owner = user;
+    } else {
+      const firstOrg = (gh.org as string) || (gh.orgs as string)?.split(/[,;\s]+/).find(Boolean) || "";
+      if (!gh.org && firstOrg) gh.org = firstOrg;
+      gh.owner = firstOrg;
+    }
+  }
+  return result;
 }
 
 /** Converts array values to space-separated strings; recurses into plain objects. */

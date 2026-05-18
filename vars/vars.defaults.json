@@ -2,7 +2,7 @@
   "title": "{{org}} Hub",
   "banner": { "dark": "banner-dark.png", "light": "banner-light.png" },
   "github": {
-    "home": "https://github.com/{{github.org}}",
+    "home": "https://github.com/{{github.owner}}",
     "appHome": "https://{{lfs.server}}"
   },
   "lfs": { "server": "lfs-server.{{cloudflare.accountSlug}}.workers.dev" },

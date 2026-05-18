@@ -33,12 +33,11 @@ describe("normalize", () => {
 });
 
 describe("buildVars", () => {
-  test("provides empty-string defaults for optional list vars", () => {
+  test("provides empty-string defaults for optional vars", () => {
     const result = normalizeVars({ org: "Test", cloudflare: { accountSlug: "slug", accountId: "id" } });
     const gh = result.github as Record<string, unknown>;
     expect(gh.org).toBe("");
-    expect(gh.users).toBe("");
-    expect(gh.owners).toBe("");
+    expect(gh.user).toBe("");
     expect(gh.orgs).toBe("");
   });
 
@@ -47,14 +46,33 @@ describe("buildVars", () => {
     expect((result.github as Record<string, unknown>).org).toBe("myorg");
   });
 
-  test("normalizes array values to space-separated strings", () => {
-    const result = normalizeVars({ github: { users: ["alice", "bob"] } });
-    expect((result.github as Record<string, unknown>).users).toBe("alice bob");
+  test("computes owner from user (user mode)", () => {
+    const result = normalizeVars({ github: { user: "pasha" } });
+    const gh = result.github as Record<string, unknown>;
+    expect(gh.owner).toBe("pasha");
   });
 
-  test("single-element array becomes bare string", () => {
-    const result = normalizeVars({ github: { owners: ["alice"] } });
-    expect((result.github as Record<string, unknown>).owners).toBe("alice");
+  test("computes owner from org (org mode)", () => {
+    const result = normalizeVars({ github: { org: "myorg" } });
+    const gh = result.github as Record<string, unknown>;
+    expect(gh.owner).toBe("myorg");
+  });
+
+  test("computes owner from first orgs entry when org absent", () => {
+    const result = normalizeVars({ github: { orgs: "org1 org2" } });
+    const gh = result.github as Record<string, unknown>;
+    expect(gh.owner).toBe("org1");
+    expect(gh.org).toBe("org1");
+  });
+
+  test("user takes priority over org for owner", () => {
+    const result = normalizeVars({ github: { user: "pasha", org: "myorg" } });
+    expect((result.github as Record<string, unknown>).owner).toBe("pasha");
+  });
+
+  test("owner is empty string when neither user nor org set", () => {
+    const result = normalizeVars({});
+    expect((result.github as Record<string, unknown>).owner).toBe("");
   });
 
   test("string list values pass through unchanged", () => {
@@ -100,17 +118,17 @@ describe("renderTemplate", () => {
   });
 
   test("full wrangler-style snippet renders correctly", () => {
-    const template = `"GITHUB_ORG": "{{github.org}}",\n"GITHUB_USERS": "{{github.users}}"`;
-    const out = renderTemplate(template, { github: { org: "myorg", users: "alice bob" } });
-    expect(out).toBe(`"GITHUB_ORG": "myorg",\n"GITHUB_USERS": "alice bob"`);
+    const template = `"GITHUB_ORG": "{{github.org}}",\n"GITHUB_USER": "{{github.user}}"`;
+    const out = renderTemplate(template, { github: { org: "myorg", user: "" } });
+    expect(out).toBe(`"GITHUB_ORG": "myorg",\n"GITHUB_USER": ""`);
   });
 });
 
 describe("end-to-end: buildVars + renderTemplate", () => {
-  test("array in vars.json renders as space-separated in template", () => {
-    const vars = normalizeVars({ github: { owners: ["alice", "bob"] }, org: "Test" });
-    const out = renderTemplate('"GITHUB_OWNERS": "{{github.owners}}"', vars);
-    expect(out).toBe('"GITHUB_OWNERS": "alice bob"');
+  test("github.owner renders correctly in template", () => {
+    const vars = normalizeVars({ github: { org: "myorg" } });
+    const out = renderTemplate('"home": "https://github.com/{{github.owner}}"', vars);
+    expect(out).toBe('"home": "https://github.com/myorg"');
   });
 
   test("missing optional var renders as empty string", () => {
