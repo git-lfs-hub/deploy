@@ -1,7 +1,3 @@
-# Temporary
-.plans
-*.bak
-
 # dependencies (bun install)
 node_modules
 
@@ -9,8 +5,6 @@ node_modules
 out
 dist
 *.tgz
-vars.resolved.json
-github-app.md
 
 # code coverage
 coverage
@@ -31,8 +25,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # caches
 .eslintcache
 .cache
-.docmd
-.turbo
 *.tsbuildinfo
 
 # IntelliJ based IDEs

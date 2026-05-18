@@ -5,7 +5,7 @@
   },
   "global": {
     "ui": "tui",
-    "inputs": ["*.js*", "*.mjs", "*.ts", "!*.md", "!*.example"]
+    "inputs": ["*.js*", "*.mjs", "*.ts", "scripts/**", "!*.md", "!*.example"]
   },
   "tasks": {
     "types": {},
@@ -14,7 +14,12 @@
     "dev": { "cache": false, "persistent": true },
     "build": {},
     "deploy": {},
+    "vars#init": {
+      "inputs": ["vars.json", "vars/**", "server/*.template.*"],
+      "outputs": ["vars.resolved.json", "github-app.md"]
+    },
     "//#sync:docs": {
+      "dependsOn": ["vars#init"],
       "inputs": ["assets/**"],
       "outputs": ["docs/vars.json", "docs/assets/**"]
     },
