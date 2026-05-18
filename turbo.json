@@ -15,8 +15,8 @@
     "build": {},
     "deploy": {},
     "vars#init": {
-      "inputs": ["vars.json", "vars/**", "server/*.template.*"],
-      "outputs": ["vars.resolved.json", "github-app.md"]
+      "inputs": ["**", "../vars.json", "../server/*.template.*"],
+      "outputs": ["../vars.resolved.json", "../github-app.md"]
     },
     "//#sync:docs": {
       "dependsOn": ["vars#init"],
