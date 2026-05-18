@@ -7,6 +7,6 @@ cd "$(dirname "$0")/.."
 pushd server > /dev/null
 ln -sf ../wrangler.jsonc ./
 ln -sf ../worker-configuration.d.ts ./
+ln -sf ../vars.resolved.json vars.json
+ln -sfn ../docs/site public
 popd > /dev/null
-
-rsync -avh docs/site/ server/public

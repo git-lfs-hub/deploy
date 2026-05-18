@@ -6,6 +6,7 @@ on:
   workflow_dispatch: # Can run this workflow manually from the Actions tab
 
 env:
+  VARS_JSON: ${{ vars.VARS_JSON || secrets.VARS_JSON }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
   TURBO_TEAMID: ${{ vars.TURBO_TEAMID }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -13,14 +14,17 @@ env:
 jobs:
   test:
     name: "Test"
-    runs-on: { group: "Linux" }
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
         with:
           submodules: recursive
+
       - name: Initialize
         uses: ./.github/actions/init
+
       - run: bunx turbo run test build
+
       - name: Turbo Summary
         uses: ./.github/actions/turbo-summary

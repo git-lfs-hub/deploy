@@ -14,9 +14,11 @@
   },
   "workspaces": [
     "docs",
-    "server"
+    "server",
+    "vars"
   ],
   "devDependencies": {
+    "handlebars": "^4.7.9",
     "turbo": "^2.9.14"
   }
 }
