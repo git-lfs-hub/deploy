@@ -23,6 +23,8 @@ jobs:
 
       - name: Initialize
         uses: ./.github/actions/init
+        with:
+          vars-json: ${{ vars.VARS_JSON || secrets.VARS_JSON }}
 
       - run: bunx turbo run test build
 

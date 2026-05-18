@@ -1,6 +1,11 @@
 name: "Init"
 description: "Checkout, set up Bun, and install root dependencies (frozen lockfile)"
 
+inputs:
+  vars-json:
+    description: "Contents of vars.json"
+    required: false
+
 runs:
   using: "composite"
   steps:
@@ -25,7 +30,7 @@ runs:
 
     - name: Initialize vars
       env:
-        VARS_JSON: ${{ env.VARS_JSON || vars.VARS_JSON || secrets.VARS_JSON }}
+        VARS_JSON: ${{ inputs.vars-json }}
       run: |
         if [ -n "$VARS_JSON" ]; then
           printf '%s\n' "$VARS_JSON" > vars.json
