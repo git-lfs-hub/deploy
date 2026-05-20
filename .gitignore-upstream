@@ -1,0 +1,6 @@
+# Don't commit these in git-lfs-hub/deploy; good to commit in forks.
+# Upstream `scripts/upstream.sh setup` sets core.excludesFile to this file.
+vars.input.json
+vars.json
+wrangler.jsonc
+worker-configuration.d.ts

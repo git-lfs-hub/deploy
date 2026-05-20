@@ -4,10 +4,10 @@ A self-hosted Git LFS server deployed as a Cloudflare Worker. Stores objects in 
 
 ## Packages
 
-| Path | Description |
-|------|-------------|
-| `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
-| `docs/` | Documentation site (`@docmd/core`) — built into `server/public/` and served as the landing page |
+| Path      | Description                                                                                     |
+| --------- | ----------------------------------------------------------------------------------------------- |
+| `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks          |
+| `docs/`   | Documentation site (`@docmd/core`) — built into `server/public/` and served as the landing page |
 
 Config rendering is handled by the external [`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config) package, invoked via `bun run config` / `turbo config` (see below).
 
@@ -16,6 +16,15 @@ Config rendering is handled by the external [`@git-lfs-hub/config`](https://gith
 ```sh
 bun install
 ```
+
+## Fork or template
+
+Use this repository as a GitHub template or fork for your own deployment:
+
+1. Create a new repository from the template (or fork).
+2. `bun install`
+3. Follow [Configuration](#configuration) below.
+4. **Commit** `vars.input.json` and the rendered artifacts (`vars.json`, `wrangler.jsonc`, etc.) in your repo. Or set the `GLH_VARS_JSON` actions variable from `vars[.input].json` in CI.
 
 ## Configuration
 
@@ -41,12 +50,12 @@ For a personal account:
 }
 ```
 
-| Key | Description |
-|-----|-------------|
-| `cloudflare.accountSlug` | Sets the Worker URL prefix (`GITHUB_APP_HOME`) |
-| `cloudflare.accountId` | Sets the R2 endpoint URL (`S3_ENDPOINT`) |
-| `github.org[s]` | Org mode — active members of up to 5 orgs get access |
-| `github.user` | User mode — single GitHub login gets access (mutually exclusive with `github.org[s]`) |
+| Key                      | Description                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------- |
+| `cloudflare.accountSlug` | Sets the Worker URL prefix (`GITHUB_APP_HOME`)                                        |
+| `cloudflare.accountId`   | Sets the R2 endpoint URL (`S3_ENDPOINT`)                                              |
+| `github.org[s]`          | Org mode — active members of up to 5 orgs get access                                  |
+| `github.user`            | User mode — single GitHub login gets access (mutually exclusive with `github.org[s]`) |
 
 `github.orgs` accepts a JSON array or a space/comma-separated string.
 
@@ -107,19 +116,19 @@ turbo deploy
 
 Two workflows are included:
 
-| Workflow | Trigger | Jobs |
-|----------|---------|------|
-| `pr.yml` | Pull requests | `test` + `build` |
+| Workflow   | Trigger                | Jobs                        |
+| ---------- | ---------------------- | --------------------------- |
+| `pr.yml`   | Pull requests          | `test` + `build`            |
 | `main.yml` | Push to `main`, manual | `test` + `build` + `deploy` |
 
 Both workflows check out submodules, install dependencies (frozen lockfile, cached), and post a Turbo run summary.
 
 Configure under **Settings → Secrets and variables → Actions**:
 
-| Name | Kind | Description |
-|------|------|-------------|
-| `CLOUDFLARE_API_TOKEN` | **Secret** | Cloudflare API token with Worker deploy permissions (deploy job only) |
-| `VARS_JSON` | Variable | Contents of `vars[.input].json`. Required unless `vars.json` are already committed. |
-| `TURBO_TEAM` | Variable | Turbo team slug (optional) |
-| `TURBO_TEAMID` | Variable | Turbo team ID (optional) |
-| `TURBO_TOKEN` | **Secret** | Turbo remote cache token (optional) |
+| Name                   | Kind       | Description                                                                         |
+| ---------------------- | ---------- | ----------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN` | **Secret** | Cloudflare API token with Worker deploy permissions (deploy job only)               |
+| `GLH_VARS_JSON`        | Variable   | Contents of `vars[.input].json`. Required unless `vars.json` are already committed. |
+| `TURBO_TEAM`           | Variable   | Turbo team slug (optional)                                                          |
+| `TURBO_TEAMID`         | Variable   | Turbo team ID (optional)                                                            |
+| `TURBO_TOKEN`          | **Secret** | Turbo remote cache token (optional)                                                 |
