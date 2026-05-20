@@ -6,9 +6,10 @@ A self-hosted Git LFS server deployed as a Cloudflare Worker. Stores objects in 
 
 | Path | Description |
 |------|-------------|
-| `vars/` | Config renderer — merges `vars.json` with defaults, validates, renders `wrangler.jsonc` and `github-app.md` |
 | `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
 | `docs/` | Documentation site (`@docmd/core`) — built into `server/public/` and served as the landing page |
+
+Config rendering is handled by the external [`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config) package, invoked via `bun run config` / `turbo config` (see below).
 
 ## Install dependencies
 
@@ -18,7 +19,7 @@ bun install
 
 ## Configuration
 
-**1. Fill in `vars.json`** (copy from `vars.example.json`):
+**1. Fill in `vars.input.json`** (copy from `vars.input.example.json` in [`git-lfs-hub/config`](https://github.com/git-lfs-hub/config)):
 
 For a GitHub organization:
 
@@ -52,10 +53,10 @@ For a personal account:
 **2. Render config artifacts:**
 
 ```sh
-turbo init
+bun run config       # or: turbo config
 ```
 
-Writes `vars.resolved.json`, renders `wrangler.jsonc`, and generates `github-app.md` with OAuth setup instructions.
+Invokes `bunx github:git-lfs-hub/config`. Reads `vars.input.json` (or `vars.json` as fallback), merges with package defaults, validates, writes `vars.json`, and renders `wrangler.jsonc` + `github-app.md`.
 
 **3. Create an R2 API token:**
 
@@ -118,7 +119,7 @@ Configure under **Settings → Secrets and variables → Actions**:
 | Name | Kind | Description |
 |------|------|-------------|
 | `CLOUDFLARE_API_TOKEN` | **Secret** | Cloudflare API token with Worker deploy permissions (deploy job only) |
-| `VARS_JSON` | Variable | Contents of `vars.json` (optional; omit if `vars.json` is committed) |
+| `VARS_JSON` | Variable | Contents of `vars[.input].json`. Required unless `vars.json` are already committed. |
 | `TURBO_TEAM` | Variable | Turbo team slug (optional) |
 | `TURBO_TEAMID` | Variable | Turbo team ID (optional) |
 | `TURBO_TOKEN` | **Secret** | Turbo remote cache token (optional) |

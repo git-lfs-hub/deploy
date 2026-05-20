@@ -6,6 +6,7 @@
     "types": "turbo types",
     "sync:docs": "scripts/sync-docs.sh",
     "sync:server": "scripts/sync-server.sh",
+    "config": "scripts/config.sh",
     "test": "turbo test",
     "test:watch": "turbo test-watch",
     "dev": "turbo dev",
@@ -14,11 +15,9 @@
   },
   "workspaces": [
     "docs",
-    "server",
-    "vars"
+    "server"
   ],
   "devDependencies": {
-    "handlebars": "^4.7.9",
     "turbo": "^2.9.14"
   }
 }

@@ -7,10 +7,10 @@ cd "$(dirname "$0")/.."
 pushd docs > /dev/null
 if [ -z "$CI" ]; then
     # Symlink locally for live updates
-    ln -sf ../vars.resolved.json vars.json
+    ln -sf ../vars.json vars.json
 else
     # copy in CI because turbo doesn't restore symlinks from cache
-    rsync -avh ../vars.resolved.json vars.json
+    rsync -avh ../vars.json vars.json
 fi
 popd > /dev/null
 

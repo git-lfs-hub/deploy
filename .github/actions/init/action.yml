@@ -23,11 +23,12 @@ runs:
     - run: bun install --frozen-lockfile
       shell: bash
 
-    - name: Initialize vars
+    - name: Initialize vars.json
+      if: hashFiles('vars.json', 'vars.input.json') == '' # neither exists
       run: |
-        if [ -n "$VARS_JSON" ]; then
-          printf '%s\n' "$VARS_JSON" > vars.json
-          echo "wrote vars.json: $VARS_JSON"
+        if [ -z "$VARS_JSON" ]; then
+          echo "::error::Commit vars[.input].json or set vars|secret.VARS_JSON from `bun run config`."
+          exit 1
         fi
-        bunx turbo init
+        printf '%s\n' "$VARS_JSON" > vars.input.json
       shell: bash

@@ -9,13 +9,13 @@ if [ -z "$CI" ]; then
     # Symlink locally for live updates
     ln -sf ../wrangler.jsonc ./
     ln -sf ../worker-configuration.d.ts ./
-    ln -sf ../vars.resolved.json vars.json
+    ln -sf ../vars.json vars.json
     ln -sfn ../docs/site public
 else
     # copy in CI because turbo doesn't restore symlinks from cache
     rsync -avh ../wrangler.jsonc ./
     # rsync -avh ../worker-configuration.d.ts ./
-    rsync -avh ../vars.resolved.json vars.json
+    rsync -avh ../vars.json vars.json
     rsync -avh ../docs/site/ public
 fi
 popd > /dev/null

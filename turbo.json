@@ -14,17 +14,21 @@
     "dev": { "cache": false, "persistent": true },
     "build": {},
     "deploy": {},
-    "vars#init": {
-      // Relative to vars/
-      "inputs": ["**", "../vars.json", "../server/*.template.*"],
+    "//#config": {
+      "inputs": [
+        "vars.input.json",
+        "vars.json",
+        "server/wrangler.template.jsonc",
+        "server/github-app.template.md"
+      ],
       "outputs": [
-        "../vars.resolved.json",
-        "../github-app.md",
-        "../wrangler.jsonc"
+        "vars.json",
+        "wrangler.jsonc",
+        "github-app.md"
       ]
     },
     "//#sync:docs": {
-      "dependsOn": ["vars#init"],
+      "dependsOn": ["//#config"],
       "inputs": ["assets/**"],
       "outputs": ["docs/vars.json", "docs/assets/**"]
     },

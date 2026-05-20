@@ -107,21 +107,22 @@ test("hello world", () => {
 
 ## Project structure
 
-Turbo monorepo with three workspaces:
+Turbo monorepo with two workspaces:
 
 | Workspace | Description |
 |-----------|-------------|
-| `vars/` | Config renderer — reads `vars.json`, writes `vars.resolved.json`, renders `wrangler.jsonc` and `github-app.md` from templates |
 | `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
 | `docs/` | Static docs site (`@docmd/core`) — built into `server/public/` |
+
+Config rendering lives in the external [`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config) package, invoked via `bun run config` (root script → `bunx github:git-lfs-hub/config`) and wired into Turbo as `//#config`.
 
 ## Commands
 
 ```sh
-turbo init      # render vars.resolved.json, wrangler.jsonc, github-app.md from vars.json
+turbo config    # merge vars.input.json (or vars.json) + defaults → vars.json, wrangler.jsonc, github-app.md
 turbo build     # build docs → copy into server/public/ → bundle Worker
 turbo test      # run all workspace tests
 turbo deploy    # deploy Worker to Cloudflare
 ```
 
-`wrangler.jsonc` lives at repo root, symlinked into `server/` by `scripts/sync-server.sh`. Edit at root, not inside `server/`. `server/wrangler.template.jsonc` is Handlebars template rendered on first `turbo init`.
+`wrangler.jsonc` lives at repo root, symlinked into `server/` by `scripts/sync-server.sh`. Edit at root, not inside `server/`. `server/wrangler.template.jsonc` is the Handlebars template rendered by `turbo config`.
