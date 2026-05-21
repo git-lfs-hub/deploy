@@ -32,85 +32,30 @@ jobs:
     name: "Deploy staging"
     needs: test
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
     concurrency:
       group: lfs-server-staging
       cancel-in-progress: false
-    env:
-      GLH_VARS_JSON: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
-      TURBO_REMOTE_CACHE_SIGNATURE_KEY: staging
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          submodules: recursive
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Reset rendered config so staging vars take effect
-        run: rm -f vars.input.json vars.json wrangler.jsonc github-app.md
-
-      - uses: ./.github/actions/init
-
-      - name: Sanity-check rendered Worker name
-        run: |
-          var_name="$(jq -r '.cloudflare.workerName' vars.json)"
-          wrangler_name="$(bun -e 'process.stdout.write((await import("./wrangler.jsonc")).default.name)')"
-          if [ "$var_name" != "lfs-server-staging" ] || [ "$wrangler_name" != "lfs-server-staging" ]; then
-            echo "::error::expected lfs-server-staging, got vars.json='$var_name' wrangler.jsonc='$wrangler_name' — refusing to deploy"
-            exit 1
-          fi
-
-      - run: bunx turbo run build --force
-
-      - run: bunx wrangler deploy --minify
-        working-directory: server
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    uses: git-lfs-hub/staging/.github/workflows/deploy.yml@main
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
+      vars-json: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
   staging-test:
     name: "Staging tests"
     needs: deploy-staging
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
     concurrency:
       group: lfs-server-staging
       cancel-in-progress: false
-    env:
-      GLH_VARS_JSON: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
-      TURBO_REMOTE_CACHE_SIGNATURE_KEY: staging
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          submodules: recursive
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Reset rendered config
-        run: rm -f vars.input.json vars.json wrangler.jsonc github-app.md
-
-      - uses: ./.github/actions/init
-
-      - name: Read staging URLs from vars.json
-        id: vars
-        run: |
-          echo "url=https://$(jq -r '.lfs.server' vars.json)" >> "$GITHUB_OUTPUT"
-          echo "title=$(jq -r '.title' vars.json)" >> "$GITHUB_OUTPUT"
-
-      - name: Docs staging test (Tier 2)
-        run: ./staging/docs-test.sh
-        env:
-          STAGING_URL: ${{ steps.vars.outputs.url }}
-          DOCS_TITLE: ${{ steps.vars.outputs.title }}
-          GH_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
-          LOGIN_SECRET: ${{ secrets.GLH_STAGING_LOGIN_SECRET }}
-
-      - name: Install git-lfs
-        run: sudo apt-get update && sudo apt-get install -y git-lfs
-
-      - name: LFS push staging test
-        run: ./staging/lfs-push-test.sh
-        env:
-          LFS_URL: ${{ steps.vars.outputs.url }}/git-lfs-hub/test
-          GH_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          RUN_ID: ${{ github.run_id }}
+    uses: git-lfs-hub/staging/.github/workflows/test.yml@main
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
+      vars-json: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
+      pr-number: ${{ github.event.pull_request.number }}
+      run-id: ${{ github.run_id }}
+    secrets:
+      GH_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
+      LOGIN_SECRET: ${{ secrets.GLH_STAGING_LOGIN_SECRET }}
