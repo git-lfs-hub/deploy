@@ -39,5 +39,5 @@ runs:
       shell: bash
 
     # Avoid turbo cache invalidations downstream
-    - run: turbo '//#config'
+    - run: bun turbo '//#config'
       shell: bash
