@@ -15,48 +15,37 @@
     "build": {},
     "deploy": {},
     "//#config": {
-      "inputs": [
-        "vars.input.json",
-        "vars.json",
-        "server/wrangler.template.jsonc",
-        "server/github-app.template.md"
-      ],
+      "inputs": ["vars.input.json", "server/*.template.*", "assets/**"],
       "outputs": [
         "vars.json",
         "wrangler.jsonc",
-        "github-app.md"
-      ]
-    },
-    "//#sync:docs": {
-      "dependsOn": ["//#config"],
-      "inputs": ["assets/**"],
-      "outputs": ["docs/vars.json", "docs/assets/**"]
-    },
-    "@git-lfs-hub/docs#build": {
-      "dependsOn": ["//#sync:docs"],
-      "outputs": ["site/**"]
-    },
-    "//#sync:server": {
-      "dependsOn": ["@git-lfs-hub/docs#build"],
-      "inputs": ["docs/site/**"],
-      "outputs": [
+        "github-app.md",
+        "docs/vars.json",
+        "docs/assets/**",
         "server/wrangler.jsonc",
         "server/worker-configuration.d.ts",
-        "server/public/**"
+        "server/vars.json",
+        "server/public"
       ]
     },
-    "@git-lfs-hub/server#test": {
-      "dependsOn": ["//#sync:server"],
-      "inputs": ["$TURBO_DEFAULT$", "!docs/**", "!public/**"]
+    "@git-lfs-hub/docs#build": {
+      "dependsOn": ["//#config"],
+      "outputs": ["site/**"]
     },
-    "@git-lfs-hub/server#test:watch": { "dependsOn": ["//#sync:server"] },
+    "@git-lfs-hub/server#test": {
+      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "inputs": ["$TURBO_DEFAULT$", "!public/**"]
+    },
+    "@git-lfs-hub/server#test:watch": {
+      "dependsOn": ["@git-lfs-hub/docs#build"]
+    },
     "@git-lfs-hub/server#build": {
-      "dependsOn": ["//#sync:server"],
-      "inputs": ["$TURBO_DEFAULT$", "!docs/**", "!test/**"],
+      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "inputs": ["$TURBO_DEFAULT$", "!test/**"],
       "outputs": ["dist/**"]
     },
     "@git-lfs-hub/server#deploy": {
-      "dependsOn": ["//#sync:server"],
+      "dependsOn": ["@git-lfs-hub/docs#build"],
       "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
     }
