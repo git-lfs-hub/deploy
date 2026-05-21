@@ -13,3 +13,4 @@
 [submodule "staging"]
 	path = staging
 	url = git@github.com:git-lfs-hub/staging.git
+	branch = main
