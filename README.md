@@ -118,8 +118,8 @@ Two workflows are included:
 
 | Workflow   | Trigger                | Jobs                                              |
 | ---------- | ---------------------- | ------------------------------------------------- |
-| `pr.yml`   | Pull requests          | `test` + `deploy-staging` + `staging-test`        |
-| `main.yml` | Push to `main`, manual | `test` + `build` + `deploy`                       |
+| `pr.yml`   | Pull requests          | `test` + `staging` (deploy + e2e against staging Worker) |
+| `main.yml` | Push to `main`, manual | `deploy` + `smoke` (e2e against prod Worker)             |
 
 Both workflows check out submodules, install dependencies (frozen lockfile, cached), and post a Turbo run summary.
 
@@ -137,14 +137,15 @@ Configure under **Settings → Secrets and variables → Actions**:
 
 `pr.yml` deploys every same-repo PR to a shared **`lfs-server-staging`** Worker and runs live staging tests (authenticated docs check + real `git lfs push` against [`git-lfs-hub/test`](https://github.com/git-lfs-hub/test)). Production stays on `main` only.
 
-Staging scripts live in the [`git-lfs-hub/staging`](https://github.com/git-lfs-hub/staging) repo, included here as a submodule at `staging/`.
+End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-lfs-hub/e2e) repo, included here as a submodule at `e2e/`. The same scripts run against the production Worker as a post-deploy smoke from `main.yml`.
 
 ### Configure under **Settings → Secrets and variables → Actions**
 
 | Name                       | Kind       | Description                                                                                                                |
 | -------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `GLH_STAGING_GITHUB_PAT`   | **Secret** | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). |
+| `GLH_STAGING_GITHUB_PAT`   | **Secret** | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
 | `GLH_STAGING_LOGIN_SECRET` | **Secret** | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`.                                  |
+| `GLH_LOGIN_SECRET`         | **Secret** | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only.                       |
 
 Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
 
@@ -160,9 +161,9 @@ Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends 
    ```
 4. Store the same `LOGIN_SECRET` value as `GLH_STAGING_LOGIN_SECRET`.
 
-### Updating staging scripts
+### Updating e2e scripts
 
 ```sh
-git submodule update --remote staging
-git add staging && git commit -m "chore(staging): bump staging submodule"
+git submodule update --remote e2e
+git add e2e && git commit -m "chore(e2e): bump e2e submodule"
 ```
