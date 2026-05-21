@@ -54,13 +54,11 @@ jobs:
       - name: Sanity-check rendered Worker name
         run: |
           var_name="$(jq -r '.cloudflare.workerName' vars.json)"
-          wrangler_name="$(jq -r '.name' wrangler.jsonc)"
-          for n in "$var_name" "$wrangler_name"; do
-            if [ "$n" != "lfs-server-staging" ]; then
-              echo "::error::expected lfs-server-staging, got vars.json='$var_name' wrangler.jsonc='$wrangler_name' — refusing to deploy"
-              exit 1
-            fi
-          done
+          wrangler_name="$(bun -e 'process.stdout.write((await import("./wrangler.jsonc")).default.name)')"
+          if [ "$var_name" != "lfs-server-staging" ] || [ "$wrangler_name" != "lfs-server-staging" ]; then
+            echo "::error::expected lfs-server-staging, got vars.json='$var_name' wrangler.jsonc='$wrangler_name' — refusing to deploy"
+            exit 1
+          fi
 
       - run: bunx turbo run build --force
 
