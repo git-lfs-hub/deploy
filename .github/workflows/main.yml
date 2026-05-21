@@ -53,5 +53,5 @@ jobs:
 
       - uses: ./.github/actions/init
 
-      - run: bun run staging-test
-        working-directory: staging
+      - run: bun run e2e-test
+        working-directory: e2e
