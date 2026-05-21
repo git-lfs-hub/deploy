@@ -10,3 +10,6 @@
 	path = config
 	url = git@github.com:git-lfs-hub/config.git
 	branch = main
+[submodule "staging"]
+	path = staging
+	url = git@github.com:git-lfs-hub/staging.git
