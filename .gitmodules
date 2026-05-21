@@ -6,3 +6,7 @@
 	path = docs
 	url = git@github.com:git-lfs-hub/docs.git
 	branch = main
+[submodule "config"]
+	path = config
+	url = git@github.com:git-lfs-hub/config.git
+	branch = main
