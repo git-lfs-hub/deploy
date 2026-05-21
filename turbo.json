@@ -24,12 +24,12 @@
         "docs/assets/**",
         "server/wrangler.jsonc",
         "server/worker-configuration.d.ts",
-        "server/vars.json",
         "server/public"
       ]
     },
     "@git-lfs-hub/docs#build": {
       "dependsOn": ["//#config"],
+      "inputs": ["$TURBO_DEFAULT$", "vars.json"],
       "outputs": ["site/**"]
     },
     "@git-lfs-hub/server#test": {
@@ -41,7 +41,7 @@
     },
     "@git-lfs-hub/server#build": {
       "dependsOn": ["@git-lfs-hub/docs#build"],
-      "inputs": ["$TURBO_DEFAULT$", "!test/**"],
+      "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!test/**"],
       "outputs": ["dist/**"]
     },
     "@git-lfs-hub/server#deploy": {
