@@ -38,6 +38,6 @@ runs:
         printf '%s\n' "$GLH_VARS_JSON" > vars.input.json
       shell: bash
 
-    # Run this here, so that `turbo` cache isn't invalidated downstream
-    - run: bun config
+    # Avoid turbo cache invalidations downstream
+    - run: turbo '//#config'
       shell: bash
