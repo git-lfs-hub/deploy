@@ -143,9 +143,10 @@ Staging scripts live in the [`git-lfs-hub/staging`](https://github.com/git-lfs-h
 
 | Name                       | Kind       | Description                                                                                                                |
 | -------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `GLH_STAGING_VARS_JSON`    | Variable   | Staging `vars.input.json`. Must set `cloudflare.workerName: "lfs-server-staging"`; recommended `s3.bucket: "lfs-objects-staging"`. |
 | `GLH_STAGING_GITHUB_PAT`   | **Secret** | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). |
 | `GLH_STAGING_LOGIN_SECRET` | **Secret** | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`.                                  |
+
+Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
 
 ### One-time staging setup
 

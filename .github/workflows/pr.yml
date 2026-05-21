@@ -28,34 +28,10 @@ jobs:
       - name: Turbo Summary
         uses: ./.github/actions/turbo-summary
 
-  deploy-staging:
-    name: "Deploy staging"
+  staging:
     needs: test
     if: github.event.pull_request.head.repo.full_name == github.repository
-    concurrency:
-      group: lfs-server-staging
-      cancel-in-progress: false
-    uses: git-lfs-hub/staging/.github/workflows/deploy.yml@pasha/staging
+    uses: git-lfs-hub/staging/.github/workflows/staging.yml@pasha/staging
     with:
-      ref: ${{ github.event.pull_request.head.sha }}
-      vars-json: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
-    secrets:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-
-  staging-test:
-    name: "Staging tests"
-    needs: deploy-staging
-    if: github.event.pull_request.head.repo.full_name == github.repository
-    concurrency:
-      group: lfs-server-staging
-      cancel-in-progress: false
-    uses: git-lfs-hub/staging/.github/workflows/test.yml@pasha/staging
-    with:
-      ref: ${{ github.event.pull_request.head.sha }}
-      vars-json: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
-      pr-number: ${{ github.event.pull_request.number }}
-      run-id: ${{ github.run_id }}
-    secrets:
-      GH_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
-      LOGIN_SECRET: ${{ secrets.GLH_STAGING_LOGIN_SECRET }}
+      vars-json: ${{ vars.GLH_VARS_JSON || secrets.GLH_VARS_JSON }}
+    secrets: inherit
