@@ -35,7 +35,7 @@ jobs:
     concurrency:
       group: lfs-server-staging
       cancel-in-progress: false
-    uses: git-lfs-hub/staging/.github/workflows/deploy.yml@main
+    uses: git-lfs-hub/staging/.github/workflows/deploy.yml@pasha/staging
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       vars-json: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
@@ -50,7 +50,7 @@ jobs:
     concurrency:
       group: lfs-server-staging
       cancel-in-progress: false
-    uses: git-lfs-hub/staging/.github/workflows/test.yml@main
+    uses: git-lfs-hub/staging/.github/workflows/test.yml@pasha/staging
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       vars-json: ${{ vars.GLH_STAGING_VARS_JSON || secrets.GLH_STAGING_VARS_JSON }}
