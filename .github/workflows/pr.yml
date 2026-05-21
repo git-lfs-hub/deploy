@@ -27,3 +27,12 @@ jobs:
 
       - name: Turbo Summary
         uses: ./.github/actions/turbo-summary
+
+  staging:
+    name: "Staging"
+    needs: test
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    uses: git-lfs-hub/staging/.github/workflows/staging.yml@main
+    with:
+      vars-json: ${{ vars.GLH_VARS_JSON }}
+    secrets: inherit
