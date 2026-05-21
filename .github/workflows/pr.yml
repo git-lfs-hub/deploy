@@ -47,17 +47,20 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Reset rendered config so staging vars take effect
-        run: rm -f vars.input.json vars.json
+        run: rm -f vars.input.json vars.json wrangler.jsonc github-app.md
 
       - uses: ./.github/actions/init
 
       - name: Sanity-check rendered Worker name
         run: |
-          name="$(jq -r '.cloudflare.workerName' vars.json)"
-          if [ "$name" != "lfs-server-staging" ]; then
-            echo "::error::expected lfs-server-staging, got '$name' — refusing to deploy"
-            exit 1
-          fi
+          var_name="$(jq -r '.cloudflare.workerName' vars.json)"
+          wrangler_name="$(jq -r '.name' wrangler.jsonc)"
+          for n in "$var_name" "$wrangler_name"; do
+            if [ "$n" != "lfs-server-staging" ]; then
+              echo "::error::expected lfs-server-staging, got vars.json='$var_name' wrangler.jsonc='$wrangler_name' — refusing to deploy"
+              exit 1
+            fi
+          done
 
       - run: bunx turbo run build --force
 
@@ -85,7 +88,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Reset rendered config
-        run: rm -f vars.input.json vars.json
+        run: rm -f vars.input.json vars.json wrangler.jsonc github-app.md
 
       - uses: ./.github/actions/init
 
