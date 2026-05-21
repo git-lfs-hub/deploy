@@ -32,3 +32,26 @@ jobs:
 
       - name: Turbo Summary
         uses: ./.github/actions/turbo-summary
+
+  smoke:
+    name: "Smoke"
+    needs: deploy
+    runs-on: ubuntu-latest
+    concurrency:
+      group: lfs-server-prod-smoke
+      cancel-in-progress: false
+    env:
+      GH_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
+      LOGIN_SECRET: ${{ secrets.GLH_LOGIN_SECRET }}
+      PR_NUMBER: main
+      RUN_ID: ${{ github.run_id }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - uses: ./.github/actions/init
+
+      - run: bun run staging-test
+        working-directory: staging
