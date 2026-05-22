@@ -144,11 +144,11 @@ End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-l
 
 ### Configure under **Settings → Secrets and variables → Actions**
 
-| Name | Description |
-| ---- | ----------- |
-| `GLH_STAGING_GITHUB_PAT` (**secret**) | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
-| `GLH_STAGING_LOGIN_SECRET` (**secret**) | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`. |
-| `GLH_LOGIN_SECRET` (**secret**) | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only. |
+| Secret | Description |
+|:---- |:----------- |
+| `GLH_STAGING_GITHUB_PAT` | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
+| `GLH_STAGING_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`. |
+| `GLH_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only. |
 
 Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
 
