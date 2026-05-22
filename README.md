@@ -1,3 +1,5 @@
+[![E2E](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml) [![CodeQL](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql)
+
 # Git LFS Hub — deploy
 
 The monorepo that gets a Git LFS Hub instance running on your own Cloudflare account. This is the **entry point** of the stack — for the bigger picture (what Git LFS Hub does, who it's for, how the repos fit together) see the [org overview](https://github.com/git-lfs-hub).
