@@ -158,9 +158,11 @@ Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends 
 2. Trigger `pr.yml` once (e.g. via **Actions → PR → Run workflow**) to create the `lfs-server-staging` Worker.
 3. Upload Worker secrets to the new script (laptop, once):
    ```sh
-   for name in S3_ACCESS_KEY_ID S3_SECRET_ACCESS_KEY GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET LOGIN_SECRET; do
-     printf '%s' "$value" | bunx wrangler secret put "$name" --name lfs-server-staging
-   done
+   wrangler secret put S3_ACCESS_KEY_ID      --name lfs-server-staging
+   wrangler secret put S3_SECRET_ACCESS_KEY  --name lfs-server-staging
+   wrangler secret put GITHUB_CLIENT_ID      --name lfs-server-staging
+   wrangler secret put GITHUB_CLIENT_SECRET  --name lfs-server-staging
+   wrangler secret put LOGIN_SECRET          --name lfs-server-staging
    ```
 4. Store the same `LOGIN_SECRET` value as `GLH_STAGING_LOGIN_SECRET`.
 
