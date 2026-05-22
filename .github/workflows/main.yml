@@ -9,6 +9,8 @@ on:
     branches: ["main"]
   workflow_dispatch: # Can run manually from the Actions tab
 
+permissions: {}
+
 jobs:
   ci:
     name: "CI"
