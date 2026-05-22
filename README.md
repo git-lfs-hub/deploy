@@ -154,7 +154,7 @@ Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends 
 
 ### One-time staging setup
 
-1. `bunx wrangler r2 bucket create lfs-objects-staging`
+1. `wrangler r2 bucket create lfs-objects-staging`
 2. Trigger `pr.yml` once (e.g. via **Actions → PR → Run workflow**) to create the `lfs-server-staging` Worker.
 3. Upload Worker secrets to the new script (laptop, once):
    ```sh
