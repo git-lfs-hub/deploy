@@ -1,0 +1,15 @@
+name: Upstream
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  upstream:
+    name: "Upstream"
+    if: vars.GLH_UPSTREAM == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: scripts/upstream.sh pre-commit
+        shell: bash

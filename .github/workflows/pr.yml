@@ -2,37 +2,18 @@ name: PR
 
 on:
   pull_request:
-
-  workflow_dispatch: # Can run this workflow manually from the Actions tab
-
-env:
-  GLH_VARS_JSON: ${{ vars.GLH_VARS_JSON || secrets.GLH_VARS_JSON }}
-  TURBO_TEAM: ${{ vars.TURBO_TEAM || secrets.TURBO_TEAM }}
-  TURBO_TEAMID: ${{ vars.TURBO_TEAMID || secrets.TURBO_TEAMID }}
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  workflow_dispatch: # Can run manually from the Actions tab
 
 jobs:
-  test:
-    name: "Test"
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          submodules: recursive
-
-      - uses: ./.github/actions/init
-
-      - run: bunx turbo run test build
-
-      - name: Turbo Summary
-        uses: ./.github/actions/turbo-summary
+  ci:
+    name: "CI"
+    uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@wip
+    secrets: inherit
 
   staging:
     name: "Staging"
-    needs: test
     if: github.event.pull_request.head.repo.full_name == github.repository
-    uses: git-lfs-hub/e2e/.github/workflows/staging.yml@main
+    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@wip
     with:
       vars-json: ${{ vars.GLH_VARS_JSON }}
     secrets: inherit
