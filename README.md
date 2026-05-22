@@ -4,11 +4,11 @@ The monorepo that gets a Git LFS Hub instance running on your own Cloudflare acc
 
 ## The flow
 
-1. Clone this repo (or use it as a GitHub template).
+1. Clone or use this repo as a GitHub template.
 2. Edit `vars.input.json` with your Cloudflare account, R2 bucket name, GitHub org or user, and OAuth app details.
-3. `bun run config` — renders `wrangler.jsonc` and `github-app.md` (the GitHub OAuth App setup guide).
+3. `bun run config` renders `wrangler.jsonc` and `github-app.md` guide.
 4. Create the R2 bucket and follow `github-app.md` to register the OAuth App, then `wrangler secret put` the secrets.
-5. `bun run deploy` — builds docs into the Worker's static assets, bundles `server`, ships to Cloudflare.
+5. `bun run deploy` ships to Cloudflare.
 
 Your team can now point their `.lfsconfig` at the deployed endpoint.
 
@@ -16,25 +16,16 @@ Your team can now point their `.lfsconfig` at the deployed endpoint.
 
 This repo composes four other repos in the stack:
 
+- **[config/](https://github.com/git-lfs-hub/config)** — renders configs; invoked via `bun run config` or `turbo config`.
 - **[server/](https://github.com/git-lfs-hub/server)** — Cloudflare Worker (Hono): Git LFS API, GitHub OAuth, R2 storage, Durable Object locks.
-- **[docs/](https://github.com/git-lfs-hub/docs)** — Docs site (`@docmd/core`); built into `server/public/` and served as the landing page.
-- **[e2e/](https://github.com/git-lfs-hub/e2e)** — Staging deploy + smoke test harness used by CI.
-- **[config/](https://github.com/git-lfs-hub/config)** — Vars renderer; invoked via `bun run config` / `turbo config`.
+- **[docs/](https://github.com/git-lfs-hub/docs)** — built with [docmd](https://github.com/docmd-io/docmd) into `server/public/` and served as the landing page.
+- **[e2e/](https://github.com/git-lfs-hub/e2e)** — staging deploy + smoke test harness used by CI.
 
 ## Install dependencies
 
 ```sh
 bun install
 ```
-
-## Fork or template
-
-Use this repository as a GitHub template or fork for your own deployment:
-
-1. Create a new repository from the template (or fork).
-2. `bun install`
-3. Follow [Configuration](#configuration) below.
-4. **Commit** `vars.input.json` and the rendered artifacts (`vars.json`, `wrangler.jsonc`, etc.) in your repo. Or set the `GLH_VARS_JSON` actions variable from `vars[.input].json` in CI.
 
 ## Configuration
 
@@ -72,10 +63,14 @@ For a personal account:
 **2. Render config artifacts:**
 
 ```sh
-bun run config       # or: turbo config
+bun run config  # or:   turbo config
 ```
 
-Invokes `bunx github:git-lfs-hub/config`. Reads `vars.input.json` (or `vars.json` as fallback), merges with package defaults, validates, writes `vars.json`, and renders `wrangler.jsonc` + `github-app.md`.
+* **Commit** `vars.input.json` and the rendered artifacts in your repo:
+  * `vars.json`,
+  * `wrangler.jsonc` and
+  * `github-app.md` (optional).
+* **Or** set the `GLH_VARS_JSON` actions variable from `vars[.input].json` in CI.
 
 **3. Create an R2 API token:**
 
@@ -97,13 +92,13 @@ wrangler secret put LOGIN_SECRET          # openssl rand -hex 32
 ## Test
 
 ```sh
-turbo test
+bun run test    # or:   turbo test
 ```
 
 ## Build
 
 ```sh
-turbo build
+bun run build   # or:   turbo build
 ```
 
 Builds the docs site first, then links it into `server/public/` before bundling the Worker.
@@ -111,7 +106,7 @@ Builds the docs site first, then links it into `server/public/` before bundling 
 ## Development
 
 ```sh
-turbo dev
+bun run dev     # or:   turbo dev
 ```
 
 ## Deploy
@@ -119,29 +114,27 @@ turbo dev
 ### Locally
 
 ```sh
-turbo deploy
+bun run deploy  # or:   turbo deploy
 ```
 
 ### GitHub Actions
 
 Two workflows are included:
 
-| Workflow   | Trigger                | Jobs                                              |
-| ---------- | ---------------------- | ------------------------------------------------- |
-| `pr.yml`   | Pull requests          | `test` + `staging` (deploy + e2e against staging Worker) |
-| `main.yml` | Push to `main`, manual | `deploy` + `smoke` (e2e against prod Worker)             |
+- **`pr.yml`** — pull requests: `test` + `staging` (deploy + e2e against staging Worker)
+- **`main.yml`** — push to `main` or manual: `deploy` + `smoke` (e2e against prod Worker)
 
 Both workflows check out submodules, install dependencies (frozen lockfile, cached), and post a Turbo run summary.
 
 Configure under **Settings → Secrets and variables → Actions**:
 
-| Name                   | Kind       | Description                                                                         |
-| ---------------------- | ---------- | ----------------------------------------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN` | **Secret** | Cloudflare API token with Worker deploy permissions (deploy job only)               |
-| `GLH_VARS_JSON`        | Variable   | Contents of `vars[.input].json`. Required unless `vars.json` are already committed. |
-| `TURBO_TEAM`           | Variable   | Turbo team slug (optional)                                                          |
-| `TURBO_TEAMID`         | Variable   | Turbo team ID (optional)                                                            |
-| `TURBO_TOKEN`          | **Secret** | Turbo remote cache token (optional)                                                 |
+| Name | Description |
+| ---- | ----------- |
+| `CLOUDFLARE_API_TOKEN` (**secret**) | Cloudflare API token with Worker deploy permissions (deploy job only) |
+| `GLH_VARS_JSON` (variable) | Contents of `vars[.input].json` (if not committed) |
+| `TURBO_TEAM` (variable) | Turbo team slug (optional) |
+| `TURBO_TEAMID` (variable) | Turbo team ID (optional) |
+| `TURBO_TOKEN` (**secret**) | Turbo remote cache token (optional) |
 
 ## Staging
 
@@ -151,11 +144,11 @@ End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-l
 
 ### Configure under **Settings → Secrets and variables → Actions**
 
-| Name                       | Kind       | Description                                                                                                                |
-| -------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `GLH_STAGING_GITHUB_PAT`   | **Secret** | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
-| `GLH_STAGING_LOGIN_SECRET` | **Secret** | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`.                                  |
-| `GLH_LOGIN_SECRET`         | **Secret** | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only.                       |
+| Name | Description |
+| ---- | ----------- |
+| `GLH_STAGING_GITHUB_PAT` (**secret**) | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
+| `GLH_STAGING_LOGIN_SECRET` (**secret**) | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`. |
+| `GLH_LOGIN_SECRET` (**secret**) | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only. |
 
 Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
 
