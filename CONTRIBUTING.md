@@ -48,7 +48,7 @@ turbo dev               # local dev
 turbo build
 ```
 
-`wrangler.jsonc` is generated at the repo root and symlinked into `server/` by `scripts/sync-server.sh`. Edit templates under `server/` (`wrangler.template.jsonc`, etc.) and vars inputs — not the generated root files on upstream.
+`wrangler.jsonc` is generated at the repo root and symlinked into `server/` by `config/cli.sh` (the `bun run config` script). Edit templates under `server/` (`wrangler.template.jsonc`, etc.) and `vars.input.json` — not the generated root files on upstream.
 
 Regenerate Cloudflare types after binding changes:
 

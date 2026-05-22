@@ -1,15 +1,25 @@
-# Git LFS Hub
+# Git LFS Hub — deploy
 
-A self-hosted Git LFS server deployed as a Cloudflare Worker. Stores objects in Cloudflare R2 and authenticates via GitHub OAuth. Includes an integrated documentation site for onboarding team members to Git LFS.
+The monorepo that gets a Git LFS Hub instance running on your own Cloudflare account. This is the **entry point** of the stack — for the bigger picture (what Git LFS Hub does, who it's for, how the repos fit together) see the [org overview](https://github.com/git-lfs-hub).
+
+## The flow
+
+1. Clone this repo (or use it as a GitHub template).
+2. Edit `vars.input.json` with your Cloudflare account, R2 bucket name, GitHub org or user, and OAuth app details.
+3. `bun run config` — renders `wrangler.jsonc` and `github-app.md` (the GitHub OAuth App setup guide).
+4. Create the R2 bucket and follow `github-app.md` to register the OAuth App, then `wrangler secret put` the secrets.
+5. `bun run deploy` — builds docs into the Worker's static assets, bundles `server`, ships to Cloudflare.
+
+Your team can now point their `.lfsconfig` at the deployed endpoint.
 
 ## Packages
 
-| Path      | Description                                                                                     |
-| --------- | ----------------------------------------------------------------------------------------------- |
-| `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks          |
-| `docs/`   | Documentation site (`@docmd/core`) — built into `server/public/` and served as the landing page |
+This repo composes four other repos in the stack:
 
-Config rendering is handled by the external [`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config) package, invoked via `bun run config` / `turbo config` (see below).
+- **[server/](https://github.com/git-lfs-hub/server)** — Cloudflare Worker (Hono): Git LFS API, GitHub OAuth, R2 storage, Durable Object locks.
+- **[docs/](https://github.com/git-lfs-hub/docs)** — Docs site (`@docmd/core`); built into `server/public/` and served as the landing page.
+- **[e2e/](https://github.com/git-lfs-hub/e2e)** — Staging deploy + smoke test harness used by CI.
+- **[config/](https://github.com/git-lfs-hub/config)** — Vars renderer; invoked via `bun run config` / `turbo config`.
 
 ## Install dependencies
 
