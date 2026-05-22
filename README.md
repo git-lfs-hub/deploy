@@ -1,4 +1,4 @@
-[![E2E](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml) [![CodeQL](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql)
+[![E2E](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml) [![CodeQL](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql) 
 
 # Git LFS Hub — deploy
 
@@ -20,6 +20,7 @@ This repo composes four other repos in the stack:
 
 - **[config/](https://github.com/git-lfs-hub/config)** — renders configs; invoked via `bun run config` or `turbo config`.
 - **[server/](https://github.com/git-lfs-hub/server)** — Cloudflare Worker (Hono): Git LFS API, GitHub OAuth, R2 storage, Durable Object locks.
+  - [![CodeQL](https://github.com/git-lfs-hub/server/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/git-lfs-hub/server/actions/workflows/github-code-scanning/codeql)
 - **[docs/](https://github.com/git-lfs-hub/docs)** — built with [docmd](https://github.com/docmd-io/docmd) into `server/public/` and served as the landing page.
 - **[e2e/](https://github.com/git-lfs-hub/e2e)** — staging deploy + smoke test harness used by CI.
 
