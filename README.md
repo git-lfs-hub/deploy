@@ -150,7 +150,7 @@ End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-l
 | `GLH_STAGING_LOGIN_SECRET` (**secret**) | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`. |
 | `GLH_LOGIN_SECRET` (**secret**) | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only. |
 
-Staging reuses the production `GLH_VARS_JSON` — the reusable workflow appends `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
+Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
 
 ### One-time staging setup
 
