@@ -128,12 +128,12 @@ Both workflows check out submodules, install dependencies (frozen lockfile, cach
 
 Configure under **Settings → Secrets and variables → Actions**:
 
-| Secret | Description |
-|:------ |:----------- |
+| Secrest | Description |
+|:------- |:----------- |
 | `CLOUDFLARE_API_TOKEN` | Cloudflare API token with Worker deploy permissions (deploy job only) |
 
-| Variable | Description |
-|:-------- |:----------- |
+| Variables | Description |
+|:--------- |:----------- |
 | `GLH_VARS_JSON` | Contents of `vars[.input].json` (if not committed) |
 | `TURBO_TEAM` | Turbo team slug (optional) |
 | `TURBO_TEAMID` | Turbo team ID (optional) |
@@ -147,8 +147,8 @@ End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-l
 
 ### Configure under **Settings → Secrets and variables → Actions**
 
-| Secret | Description |
-|:---- |:----------- |
+| Secrets | Description |
+|:------- |:----------- |
 | `GLH_STAGING_GITHUB_PAT` | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
 | `GLH_STAGING_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`. |
 | `GLH_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only. |
