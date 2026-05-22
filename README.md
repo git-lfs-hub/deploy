@@ -51,14 +51,14 @@ For a personal account:
 }
 ```
 
-| Key                      | Description                                                                           |
-| ------------------------ | ------------------------------------------------------------------------------------- |
-| `cloudflare.accountSlug` | Sets the Worker URL prefix (`GITHUB_APP_HOME`)                                        |
-| `cloudflare.accountId`   | Sets the R2 endpoint URL (`S3_ENDPOINT`)                                              |
-| `github.org[s]`          | Org mode — active members of up to 5 orgs get access                                  |
-| `github.user`            | User mode — single GitHub login gets access (mutually exclusive with `github.org[s]`) |
+| Key | Description |
+|:----|:------------|
+| `cloudflare.accountSlug`  | Sets the Worker URL prefix (`GITHUB_APP_HOME`) |
+| `cloudflare.accountId`    | Sets the R2 endpoint URL (`S3_ENDPOINT`)  |
+| `github.org[s]` -- either | Org mode — active members of up to 5 orgs get access |
+| `github.user` -- or       | User mode — single GitHub login gets access (mutually exclusive with `github.org[s]`) |
 
-`github.orgs` accepts a JSON array or a space/comma-separated string.
+See [git-lfs-hub/config](https://github.com/git-lfs-hub/config#vars) for more details.
 
 **2. Render config artifacts:**
 
