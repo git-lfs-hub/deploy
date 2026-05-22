@@ -128,7 +128,7 @@ Both workflows check out submodules, install dependencies (frozen lockfile, cach
 
 Configure under **Settings → Secrets and variables → Actions**:
 
-| Secrest | Description |
+| Secrets | Description |
 |:------- |:----------- |
 | `CLOUDFLARE_API_TOKEN` | Cloudflare API token with Worker deploy permissions (deploy job only) |
 
