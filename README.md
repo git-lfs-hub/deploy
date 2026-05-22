@@ -128,13 +128,16 @@ Both workflows check out submodules, install dependencies (frozen lockfile, cach
 
 Configure under **Settings → Secrets and variables → Actions**:
 
-| Name | Description |
-| ---- | ----------- |
-| `CLOUDFLARE_API_TOKEN` (**secret**) | Cloudflare API token with Worker deploy permissions (deploy job only) |
-| `GLH_VARS_JSON` (variable) | Contents of `vars[.input].json` (if not committed) |
-| `TURBO_TEAM` (variable) | Turbo team slug (optional) |
-| `TURBO_TEAMID` (variable) | Turbo team ID (optional) |
-| `TURBO_TOKEN` (**secret**) | Turbo remote cache token (optional) |
+| Secret | Description |
+|:------ |:----------- |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API token with Worker deploy permissions (deploy job only) |
+
+| Variable | Description |
+|:-------- |:----------- |
+| `GLH_VARS_JSON` | Contents of `vars[.input].json` (if not committed) |
+| `TURBO_TEAM` | Turbo team slug (optional) |
+| `TURBO_TEAMID` | Turbo team ID (optional) |
+| `TURBO_TOKEN` | Turbo remote cache token (optional) |
 
 ## Staging
 
