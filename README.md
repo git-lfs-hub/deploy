@@ -56,7 +56,7 @@ For a personal account:
 | `cloudflare.accountSlug`  | Sets the Worker URL prefix (`GITHUB_APP_HOME`) |
 | `cloudflare.accountId`    | Sets the R2 endpoint URL (`S3_ENDPOINT`)  |
 | `github.org[s]` -- either | Org mode — active members of up to 5 orgs get access |
-| `github.user` -- or       | User mode — single GitHub login gets access (mutually exclusive with `github.org[s]`) |
+| `github.user` -- or       | User mode — single GitHub login gets access |
 
 See [git-lfs-hub/config](https://github.com/git-lfs-hub/config#vars) for more details.
 
