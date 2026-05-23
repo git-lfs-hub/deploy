@@ -23,3 +23,5 @@ jobs:
     needs: cd
     uses: git-lfs-hub/ci-cd/.github/workflows/e2e.yml@wip
     secrets: inherit
+    permissions:
+      contents: write

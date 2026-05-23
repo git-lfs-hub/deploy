@@ -16,6 +16,6 @@ jobs:
     name: "Staging"
     if: github.event.pull_request.head.repo.full_name == github.repository
     uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@wip
-    with:
-      vars-json: ${{ vars.GLH_VARS_JSON }}
     secrets: inherit
+    permissions:
+      contents: write
