@@ -1,6 +1,10 @@
-[![E2E](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml) [![CodeQL](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql)
-
 # Git LFS Hub — deploy
+
+[![CodeQL][codeql-badge]][codeql-href]
+[![CI][ci-badge]][gh-wf-href]
+[![CD][cd-badge]][gh-wf-href]
+[![E2E][e2e-badge]][gh-wf-href]
+[![License][license-badge]][license-href]
 
 The monorepo that gets a Git LFS Hub instance running on your own Cloudflare account. This is the **entry point** of the stack — for the bigger picture (what Git LFS Hub does, who it's for, how the repos fit together) see the [org overview](https://github.com/git-lfs-hub).
 
@@ -171,9 +175,13 @@ Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudfla
    ```
 4. Store the same `LOGIN_SECRET` value as `GLH_STAGING_LOGIN_SECRET`.
 
-### Updating e2e scripts
+[codeql-badge]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg
+[codeql-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql
 
-```sh
-git submodule update --remote e2e
-git add e2e && git commit -m "chore(e2e): bump e2e submodule"
-```
+[ci-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CI%20%2F%20Test?icon=vitest&label=CI
+[cd-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CD%20%2F%20Deploy?icon=cloudflareworkers&label=CD
+[e2e-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/E2E%20%2F%20Test?icon=gitlfs&label=E2E
+[gh-wf-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml
+
+[license-badge]: https://badgen.net/github/license/git-lfs-hub/deploy
+[license-href]: LICENSE.md
