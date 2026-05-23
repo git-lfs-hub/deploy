@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   upstream:
-    name: "Upstream"
+    name: Check pre-commit
     if: vars.GLH_UPSTREAM == 'true'
     runs-on: ubuntu-latest
     steps:
