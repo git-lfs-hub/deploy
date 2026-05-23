@@ -176,16 +176,16 @@ Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudfla
    ```
 4. Store the same `LOGIN_SECRET` value as `GLH_STAGING_LOGIN_SECRET`.
 
-[ci-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CI%20%2F%20Test?icon=vitest&label=CI&labelColor=3c444c
-[cd-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CD%20%2F%20Deploy?icon=cloudflareworkers&label=CD&labelColor=3c444c
-[e2e-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/E2E%20%2F%20Test?icon=gitlfs&label=E2E&labelColor=3c444c
+[ci-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CI%20/%20Test?icon=vitest&label=CI
+[cd-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CD%20/%20Deploy?icon=cloudflareworkers&label=CD
+[e2e-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/E2E%20/%20Test?icon=gitlfs&label=E2E
 [gh-wf-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml
 
-[socket-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/Socket%20Security%3A%20Project%20Report?icon=socket&label=Socket&labelColor=3c444c
+[socket-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/Socket%20Security%3A%20Project%20Report?icon=socket&label=Socket
 [socket-href]: https://socket.dev/dashboard/org/git-lfs-hub/repo/@git-lfs-hub/deploy
 
 [codeql-badge]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg
 [codeql-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql
 
-[license-badge]: https://badgen.net/github/license/git-lfs-hub/deploy?labelColor=3c444c
+[license-badge]: https://badgen.net/github/license/git-lfs-hub/deploy
 [license-href]: LICENSE.md
