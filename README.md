@@ -3,8 +3,8 @@
 [![CI][ci-badge]][gh-wf-href]
 [![CD][cd-badge]][gh-wf-href]
 [![E2E][e2e-badge]][gh-wf-href]
-[![Socket][socket-badge]][socket-href]
 [![CodeQL][codeql-badge]][codeql-href]
+[![Socket][socket-badge]][socket-href]
 [![License][license-badge]][license-href]
 
 The monorepo that gets a Git LFS Hub instance running on your own Cloudflare account. This is the **entry point** of the stack — for the bigger picture (what Git LFS Hub does, who it's for, how the repos fit together) see the [org overview](https://github.com/git-lfs-hub).
