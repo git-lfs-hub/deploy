@@ -1,9 +1,5 @@
 name: Main
 
-permissions:
-  contents: read
-  packages: read
-
 on:
   push:
     branches: ["main"]
