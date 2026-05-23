@@ -9,19 +9,18 @@ permissions: {}
 jobs:
   ci:
     name: "CI"
-    uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@wip
+    uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@main
     secrets: inherit
 
   cd:
     name: "CD"
     needs: ci
-    uses: git-lfs-hub/ci-cd/.github/workflows/cd.yml@wip
+    uses: git-lfs-hub/ci-cd/.github/workflows/cd.yml@main
     secrets: inherit
 
   e2e:
     name: "E2E"
     needs: cd
-    uses: git-lfs-hub/ci-cd/.github/workflows/e2e.yml@wip
+    uses: git-lfs-hub/ci-cd/.github/workflows/e2e.yml@main
     secrets: inherit
-    permissions:
-      contents: write
+    permissions: { contents: write }

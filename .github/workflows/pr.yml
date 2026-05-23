@@ -9,13 +9,12 @@ permissions: {}
 jobs:
   ci:
     name: "CI"
-    uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@wip
+    uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@main
     secrets: inherit
 
   staging:
     name: "Staging"
     if: github.event.pull_request.head.repo.full_name == github.repository
-    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@wip
+    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@main
     secrets: inherit
-    permissions:
-      contents: write
+    permissions: { contents: write }

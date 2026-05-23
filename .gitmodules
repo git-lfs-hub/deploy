@@ -14,7 +14,3 @@
 	path = e2e
 	url = git@github.com:git-lfs-hub/e2e.git
 	branch = main
-[submodule "ci-cd"]
-	path = ci-cd
-	url = git@github.com:git-lfs-hub/ci-cd.git
-	branch = main
