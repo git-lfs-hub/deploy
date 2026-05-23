@@ -1,8 +1,7 @@
 name: Main
 
 on:
-  push:
-    branches: ["main"]
+  push: { branches: ["main"] }
   workflow_dispatch: # Can run manually from the Actions tab
 
 permissions: {}

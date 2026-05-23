@@ -1,7 +1,7 @@
 name: Upstream
 
 on:
-  push:
+  push: { branches: ["main"] }
   pull_request:
 
 permissions:
