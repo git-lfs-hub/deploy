@@ -1,6 +1,11 @@
-[![E2E](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml) [![CodeQL](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql)
-
 # Git LFS Hub — deploy
+
+[![CI][ci-badge]][gh-wf-href]
+[![CD][cd-badge]][gh-wf-href]
+[![E2E][e2e-badge]][gh-wf-href]
+[![Socket][socket-badge]][socket-href]
+[![CodeQL][codeql-badge]][codeql-href]
+[![License][license-badge]][license-href]
 
 The monorepo that gets a Git LFS Hub instance running on your own Cloudflare account. This is the **entry point** of the stack — for the bigger picture (what Git LFS Hub does, who it's for, how the repos fit together) see the [org overview](https://github.com/git-lfs-hub).
 
@@ -171,9 +176,16 @@ Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudfla
    ```
 4. Store the same `LOGIN_SECRET` value as `GLH_STAGING_LOGIN_SECRET`.
 
-### Updating e2e scripts
+[ci-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CI%20%2F%20Test?icon=vitest&label=CI&labelColor=3c444c
+[cd-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CD%20%2F%20Deploy?icon=cloudflareworkers&label=CD&labelColor=3c444c
+[e2e-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/E2E%20%2F%20Test?icon=gitlfs&label=E2E&labelColor=3c444c
+[gh-wf-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml
 
-```sh
-git submodule update --remote e2e
-git add e2e && git commit -m "chore(e2e): bump e2e submodule"
-```
+[socket-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/Socket%20Security%3A%20Project%20Report?icon=socket&label=Socket&labelColor=3c444c
+[socket-href]: https://socket.dev/dashboard/org/git-lfs-hub/repo/@git-lfs-hub/deploy
+
+[codeql-badge]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg
+[codeql-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql
+
+[license-badge]: https://badgen.net/github/license/git-lfs-hub/deploy?labelColor=3c444c
+[license-href]: LICENSE.md
