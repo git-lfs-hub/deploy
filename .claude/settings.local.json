@@ -1,7 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(turbo init *)"
-    ]
+    "allow": ["Bash(turbo init *)", "WebFetch(domain:socket.dev)", "WebSearch", "Bash(grep)"]
   }
 }
