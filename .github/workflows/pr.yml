@@ -16,6 +16,6 @@ jobs:
   staging:
     name: "Staging"
     if: github.event.pull_request.head.repo.full_name == github.repository
-    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@pasha/fix-staging-bun
+    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@main
     secrets: inherit
     permissions: { contents: write }
