@@ -12,6 +12,7 @@
     "deploy": "turbo deploy"
   },
   "workspaces": [
+    "auth",
     "config",
     "docs",
     "server",
