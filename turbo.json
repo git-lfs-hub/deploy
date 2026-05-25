@@ -48,6 +48,18 @@
       "dependsOn": ["@git-lfs-hub/docs#build"],
       "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
+    },
+    "@git-lfs-hub/gc#build": {
+      "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!src/**/*.spec.ts"],
+      "outputs": [".cloudflare/**", "dist/**"]
+    },
+    "@git-lfs-hub/gc#test": {
+      "inputs": ["$TURBO_DEFAULT$"]
+    },
+    "@git-lfs-hub/gc#deploy": {
+      "dependsOn": ["@git-lfs-hub/gc#build"],
+      "env": ["CLOUDFLARE_API_TOKEN"],
+      "cache": false
     }
   }
 }

@@ -6,7 +6,7 @@ Thanks for your interest in Git LFS Hub. This repository is a Turbo monorepo (`s
 
 |                                                    | **Upstream** (`git-lfs-hub/deploy`)                    | **Fork / template instance**                |
 | -------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------- |
-| Instance config (`vars.json`, `wrangler.jsonc`, …) | Not committed — CI uses `GLH_VARS_JSON`                | Committed in your repo                      |
+| Instance config (`vars.json`, `wrangler[.gc].jsonc`, …) | Not committed — CI uses `GLH_VARS_JSON`                | Committed in your repo                      |
 | Local ignore for config                            | `.gitignore-upstream` via `scripts/upstream.sh setup`  | Use normal `.gitignore` (no upstream setup) |
 | Pre-commit / CI guard                              | `GLH_UPSTREAM=true` + `scripts/upstream.sh pre-commit` | Skipped (no repo variable)                  |
 
@@ -48,7 +48,7 @@ turbo dev               # local dev
 turbo build
 ```
 
-`wrangler.jsonc` is generated at the repo root and symlinked into `server/` by `config/cli.sh` (the `bun run config` script). Edit templates under `server/` (`wrangler.template.jsonc`, etc.) and `vars.input.json` — not the generated root files on upstream.
+`wrangler[.gc].jsonc` are generated at the repo root and symlinked into `{server,gc}/` by `config/cli.sh` (the `bun run config` script). Edit templates under `{server,gc}/` (`wrangler.template.jsonc`, etc.) and `vars.input.json` — not the generated root files on upstream.
 
 Regenerate Cloudflare types after binding changes:
 

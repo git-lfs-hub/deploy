@@ -2,5 +2,5 @@
 # Upstream `scripts/upstream.sh setup` sets core.excludesFile to this file.
 vars.input.json
 vars.json
-wrangler.jsonc
-worker-configuration.d.ts
+wrangler*.jsonc
+worker-configuration*.d.ts

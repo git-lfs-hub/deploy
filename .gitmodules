@@ -17,3 +17,8 @@
 [submodule "auth"]
 	path = auth
 	url = git@github.com:git-lfs-hub/auth.git
+	branch = main
+[submodule "gc"]
+	path = gc
+	url = git@github.com:git-lfs-hub/gc.git
+	branch = main

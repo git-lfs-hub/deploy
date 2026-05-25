@@ -113,16 +113,29 @@ Turbo monorepo with four workspaces, all git submodules of this repo:
 |-----------|-------------|
 | `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
 | `docs/` | Static docs site (`@docmd/core`) — built into `server/public/` |
+| `gc/` | Cloudflare Worker (SvelteKit) — LFS GC and related admin/ functionality |
 | `config/` | Vars renderer ([`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config)) — invoked via `bun run config` (root script → `config/cli.sh`) and wired into Turbo as `//#config` |
 | `e2e/` | Staging deploy + smoke tests (vitest); reusable GitHub Actions workflow lives in [`git-lfs-hub/e2e`](https://github.com/git-lfs-hub/e2e) |
 
 ## Commands
 
 ```sh
-turbo config    # merge vars.input.json (or vars.json) + defaults → vars.json, wrangler.jsonc, github-app.md
-turbo build     # build docs → copy into server/public/ → bundle Worker
+turbo config    # merge vars.input.json (or vars.json) + defaults → vars.json, wrangler[.gc].jsonc, github-app.md
+turbo build     # build docs → copy into server/public/ → bundle server/ and gc/ Workers
 turbo test      # run all workspace tests
-turbo deploy    # deploy Worker to Cloudflare
+turbo deploy    # deploy server/ and gc/ Workers to Cloudflare
 ```
 
-`wrangler.jsonc` lives at repo root, symlinked into `server/` by `config/cli.sh` (along with `worker-configuration.d.ts` and `server/public/` → `docs/site/`). Edit at root, not inside `server/`. `server/wrangler.template.jsonc` is the Handlebars template rendered by `bun run config` / `turbo config`.
+## Cloudflare Workers
+
+### Server
+
+- `wrangler.jsonc` lives at repo root, symlinked into `server/` by `config/cli.sh` (along with `worker-configuration.d.ts` and `server/public/` → `docs/site/`)
+- Edit at root, not inside `server/`.
+- `server/wrangler.template.jsonc` is the Handlebars template rendered by `bun run config` / `turbo config`.
+
+### GC
+
+- `wrangler.gc.jsonc` lives at repo root, symlinked into `gc/` by `config/cli.sh` (along with `worker-configuration.gc.d.ts`).
+- Edit at root, not inside `gc/`.
+- `gc/wrangler.template.jsonc` is the Handlebars template rendered by `bun run config` / `turbo config`.
