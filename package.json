@@ -7,7 +7,9 @@
     "config": "config/cli.sh",
     "test": "turbo test",
     "test:watch": "turbo test-watch",
-    "dev": "turbo dev",
+    "dev": "turbo dev --filter=@git-lfs-hub/admin",
+    "dev:server": "turbo dev --filter=@git-lfs-hub/server",
+    "seed-dev": "admin/scripts/seed-dev.ts",
     "build": "turbo build",
     "deploy": "turbo deploy"
   },
