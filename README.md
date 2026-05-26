@@ -12,9 +12,9 @@ The monorepo that gets a Git LFS Hub instance running on your own Cloudflare acc
 ## The flow
 
 1. Clone or use this repo as a GitHub template.
-2. Edit `vars.input.json` with your Cloudflare account, R2 bucket name, GitHub org or user, and OAuth app details.
-3. `bun run config` renders `wrangler[.gc].jsonc` and `github-app.md` guide.
-4. Create the R2 bucket and follow `github-app.md` to register the OAuth App, then `wrangler secret put` the secrets.
+2. Edit `vars.input.json` with your Cloudflare account, R2 bucket name, GitHub org or user, and GitHub App details.
+3. `bun run config` renders `wrangler[.admin].jsonc` and `github-app.md` guide.
+4. Create the R2 bucket and follow `github-app.md` to register the GitHub App, then `wrangler secret put` the secrets.
 5. `bun run deploy` ships to Cloudflare.
 
 Your team can now point their `.lfsconfig` at the deployed endpoint.
@@ -75,7 +75,7 @@ bun run config  # or:   turbo config
 
 * **Commit** `vars.input.json` and the rendered artifacts in your repo:
   * `vars.json`,
-  * `wrangler[.gc].jsonc` and
+  * `wrangler[.admin].jsonc` and
   * `github-app.md` (optional).
 * **Or** set the `GLH_VARS_JSON` actions variable from `vars[.input].json` in CI.
 
@@ -88,12 +88,20 @@ wrangler secret put S3_ACCESS_KEY_ID      # R2 Access Key ID
 wrangler secret put S3_SECRET_ACCESS_KEY  # R2 Secret Access Key
 ```
 
-**4. Register the GitHub OAuth App** — follow the generated `github-app.md`, then:
+**4. Register the GitHub App** — follow the generated `github-app.md`, then:
 
 ```sh
+# server worker
 wrangler secret put GITHUB_CLIENT_ID
 wrangler secret put GITHUB_CLIENT_SECRET
 wrangler secret put LOGIN_SECRET          # openssl rand -hex 32
+
+# admin worker (admin UI + installation tokens)
+cd admin/
+wrangler secret put GITHUB_CLIENT_ID
+wrangler secret put GITHUB_CLIENT_SECRET
+wrangler secret put GITHUB_APP_ID          # numeric App ID
+wrangler secret put GITHUB_APP_PRIVATE_KEY # PEM contents
 ```
 
 ## Test

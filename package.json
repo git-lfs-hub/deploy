@@ -15,7 +15,7 @@
     "auth",
     "config",
     "docs",
-    "gc",
+    "admin",
     "server",
     "e2e"
   ],
