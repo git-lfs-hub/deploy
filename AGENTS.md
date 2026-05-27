@@ -1,141 +1,48 @@
-# CLAUDE.md AGENTS.md
-
-This is `AGENTS.md`, `CLAUDE.md` symlinks to this file.
-
-# IMPORTANT!
-
-Guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
-
-**Tradeoff:** Bias toward caution over speed. For trivial tasks, use judgment.
-
-## 1. Think Before Coding
-
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-Before implementing:
-- State assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
-
-## 2. Simplicity First
-
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-
-"Would a senior engineer say this is overcomplicated?" If yes, simplify.
-
-## 3. Surgical Changes
-
-**Touch only what you must. Clean up only your own mess.**
-
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
-
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-Test: every changed line should trace to user's request.
-
-## 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
-
----
-
-**Working if:** fewer unnecessary diffs, fewer rewrites from overcomplication, clarifying questions before implementation.
-
----
-
-# Technical
-
-## Bun instead of Node
-
-Default to using Bun instead of Node.js.
-
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Use `bunx <package> <command>` instead of `npx <package> <command>`
-- Bun automatically loads .env, so don't use dotenv.
-
-## APIs
-
-- `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
-- `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
-- `Bun.redis` for Redis. Don't use `ioredis`.
-- `Bun.sql` for Postgres. Don't use `pg` or `postgres.js`.
-- `WebSocket` is built-in. Don't use `ws`.
-- Prefer `Bun.file` over `node:fs`'s readFile/writeFile
-- Bun.$`ls` instead of execa.
-
-## Testing
-
-Use `vitest` to run tests.
-
-```ts#index.test.ts
-import { test, expect } from "vitest";
-
-test("hello world", () => {
-  expect(1).toBe(1);
-});
-```
+# AGENTS.md
 
 ## Project structure
 
-Turbo monorepo with four workspaces, all git submodules of this repo:
+Turbo monorepo with workspaces, all git submodules of this repo:
 
 | Workspace | Description |
 |-----------|-------------|
-| `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
-| `docs/` | Static docs site (`@docmd/core`) — built into `server/public/` |
-| `admin/` | Cloudflare Worker (SvelteKit) — admin UI, LFS GC, reconciliation |
-| `config/` | Vars renderer ([`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config)) — invoked via `bun run config` (root script → `config/cli.sh`) and wired into Turbo as `//#config` |
-| `e2e/` | Staging deploy + smoke tests (vitest); reusable GitHub Actions workflow lives in [`git-lfs-hub/e2e`](https://github.com/git-lfs-hub/e2e) |
+| server/ | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 lfs-objects storage, Durable Object locks |
+| admin/ | Cloudflare Worker (SvelteKit) — admin UI, LFS GC, reconciliation |
+| auth/ | Shared reusable auth library |
+| docs/ | Static user guide — built into server/public/ |
+| config/ | Renders vars.json and wrangler.jsonc — config/cli.sh invoked via `bun run config`, wired into Turbo as //#config |
+| e2e/ | Staging deploy + smoke tests (vitest); `git-lfs-hub/e2e` reusable GitHub Actions |
 
 ## Commands
 
 ```sh
-turbo config    # merge vars.input.json (or vars.json) + defaults → vars.json, wrangler[.admin].jsonc, github-app.md
-turbo build     # build docs → copy into server/public/ → bundle server/ and admin/ Workers
-turbo test      # run all workspace tests
-turbo deploy    # deploy server/ and admin/ Workers to Cloudflare
+turbo config        # merge vars[.input].json + defaults → vars.json, wrangler[.admin].jsonc, github-app.md
+turbo build         # build docs → copy into server/public/ → bundle server/ and admin/ Workers
+turbo test          # run all workspace tests
+turbo dev           # run admin/ dev with server/ as "auxilaryWorker" without docs/
+turbo dev:server    # run server/ dev including docs/
+turbo deploy        # deploy server/ (with docs/) and admin/ Workers to Cloudflare
 ```
 
-## Cloudflare Workers
+### Bun instead of node/npm/npx/pnpm/yarn
 
-### Server
+- Use `bun <file>`, not `node <file>` or `ts-node <file>`
+- Use `bun install`, not `npm install` or `yarn install` or `pnpm install`
+- Use `bun run <script>`, not `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
+- Use `bunx <package> <command>`, not `npx <package> <command>`
+- Bun automatically loads .env, so don't use dotenv.
 
-- `wrangler.jsonc` lives at repo root, symlinked into `server/` by `config/cli.sh` (along with `worker-configuration.d.ts` and `server/public/` → `docs/site/`)
-- Edit at root, not inside `server/`.
-- `server/wrangler.template.jsonc` is the Handlebars template rendered by `bun run config` / `turbo config`.
+## Configs
 
-### Admin
+### vars.json and wrangler.jsonc
 
-- `wrangler.admin.jsonc` lives at repo root, symlinked into `admin/` by `config/cli.sh` (along with `worker-configuration.admin.d.ts`).
-- Edit at root, not inside `admin/`.
-- `admin/wrangler.template.jsonc` is the Handlebars template rendered by `bun run config` / `turbo config`.
+Rendered by config/cli.sh from server/, admin/ and docs/ templates and simlinked back into server/, admin/ and docs/. Edit templates, not rendered configs.
+- vars.input.json + config/vars.template.json -> vars.json -> docs/vars.json
+- server/wrangler.template.jsonc + vars.json -> wrangler.jsonc -> server/wrangler.jsonc
+- admin/wrangler.template.jsonc + vars.json -> wrangler.admin.jsonc -> admin/wrangler.jsonc
+
+# worker-configuration.d.ts
+
+Don't edit directly, run `wrangler types` to create/update. Also symlinked:
+- worker-configuration.d.ts -> server/worker-configuration.d.ts
+- worker-configuration.admin.d.ts -> admin/worker-configuration.d.ts
