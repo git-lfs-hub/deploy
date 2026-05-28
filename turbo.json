@@ -1,3 +1,4 @@
+// Cross-submodule CI test / build / deploy tasks.
 {
   "$schema": "./node_modules/turbo/schema.json",
   "futureFlags": {
@@ -10,8 +11,6 @@
   "tasks": {
     "types": {},
     "test": {},
-    "test:watch": { "cache": false, "persistent": true },
-    "dev": { "cache": false, "persistent": true },
     "build": {},
     "deploy": {},
     "//#config": {
@@ -49,6 +48,20 @@
     },
     "@git-lfs-hub/server#deploy": {
       "dependsOn": ["@git-lfs-hub/docs#build"],
+      "env": ["CLOUDFLARE_API_TOKEN"],
+      "cache": false
+    },
+    "@git-lfs-hub/admin#test": {
+      "dependsOn": ["//#config"],
+      "inputs": ["$TURBO_DEFAULT$", "!public/**"]
+    },
+    "@git-lfs-hub/admin#build": {
+      "dependsOn": ["//#config"],
+      "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!test/**"],
+      "outputs": ["dist/**"]
+    },
+    "@git-lfs-hub/admin#deploy": {
+      "dependsOn": ["//#config"],
       "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
     }

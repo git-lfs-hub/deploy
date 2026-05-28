@@ -7,12 +7,14 @@
     "config": "config/cli.sh",
     "test": "turbo test",
     "test:watch": "turbo test-watch",
-    "dev": "turbo dev",
+    "dev": "config/cli.sh && cd admin && bun run dev",
+    "dev:server": "config/cli.sh && cd server && bun run dev",
+    "dev:docs": "config/cli.sh && cd docs && bun run dev",
     "build": "turbo build",
     "deploy": "turbo deploy"
   },
   "workspaces": [
-
+    "admin",
     "config",
     "docs",
     "e2e",
