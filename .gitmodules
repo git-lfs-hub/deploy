@@ -16,5 +16,5 @@
 	branch = main
 [submodule "lib"]
 	path = lib
-	url = git@github.com:git-lfs-hub/auth.git
+	url = git@github.com:git-lfs-hub/lib.git
 	branch = main
