@@ -763,6 +763,10 @@
 
     "@cspotcode/source-map-support/@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.9", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.0.3", "@jridgewell/sourcemap-codec": "^1.4.10" } }, "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ=="],
 
+    "@git-lfs-hub/e2e/@git-lfs-hub/lib": ["@git-lfs-hub/lib@file:lib", { "dependencies": { "@octokit/rest": "^22.0.1", "hono": "^4.12.23", "jose": "^6.2.3" }, "devDependencies": { "@vitest/coverage-istanbul": "^4.1.7", "vitest": "^4.1.7" } }],
+
+    "@git-lfs-hub/server/@git-lfs-hub/lib": ["@git-lfs-hub/lib@file:lib", { "dependencies": { "@octokit/rest": "^22.0.1", "hono": "^4.12.23", "jose": "^6.2.3" }, "devDependencies": { "@vitest/coverage-istanbul": "^4.1.7", "vitest": "^4.1.7" } }],
+
     "@poppinss/dumper/supports-color": ["supports-color@10.2.2", "", {}, "sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g=="],
 
     "make-dir/semver": ["semver@7.8.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-rkVq3IXh+4FDGch+KwzX3aV9W3kO54GyEgpvBzSyctDA6Xtd7RJQV1xmXbeQp5v7+VzLOfVqiutSE6GICgPFvg=="],
