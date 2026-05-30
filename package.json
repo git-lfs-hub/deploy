@@ -12,11 +12,12 @@
     "deploy": "turbo deploy"
   },
   "workspaces": [
-    "auth",
+
     "config",
     "docs",
-    "server",
-    "e2e"
+    "e2e",
+    "lib",
+    "server"
   ],
   "devDependencies": {
     "turbo": "^2.9.14"

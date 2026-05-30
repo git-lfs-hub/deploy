@@ -14,6 +14,7 @@
 	path = e2e
 	url = git@github.com:git-lfs-hub/e2e.git
 	branch = main
-[submodule "auth"]
-	path = auth
+[submodule "lib"]
+	path = lib
 	url = git@github.com:git-lfs-hub/auth.git
+	branch = main
