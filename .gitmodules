@@ -18,3 +18,7 @@
 	path = lib
 	url = git@github.com:git-lfs-hub/lib.git
 	branch = main
+[submodule "admin"]
+	path = admin
+	url = git@github.com:git-lfs-hub/admin.git
+	branch = main
