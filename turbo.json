@@ -9,10 +9,10 @@
   },
   "tasks": {
     "types": {},
-    "test": {},
+    "test": { "dependsOn": ["types"] },
     "test:watch": { "cache": false, "persistent": true },
     "dev": { "cache": false, "persistent": true },
-    "build": {},
+    "build": { "dependsOn": ["types"] },
     "deploy": {},
     "//#config": {
       "inputs": ["vars.input.json", "server/*.template.*", "assets/**"],
@@ -36,14 +36,14 @@
       "dependsOn": ["//#config"]
     },
     "@git-lfs-hub/server#test": {
-      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "inputs": ["$TURBO_DEFAULT$", "!public/**"]
     },
     "@git-lfs-hub/server#test:watch": {
-      "dependsOn": ["@git-lfs-hub/docs#build"]
+      "dependsOn": ["@git-lfs-hub/docs#build", "types"]
     },
     "@git-lfs-hub/server#build": {
-      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!test/**"],
       "outputs": ["dist/**"]
     },
