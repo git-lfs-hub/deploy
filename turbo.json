@@ -32,6 +32,9 @@
       "inputs": ["$TURBO_DEFAULT$", "vars.json"],
       "outputs": ["site/**"]
     },
+    "@git-lfs-hub/server#types": {
+      "dependsOn": ["//#config"]
+    },
     "@git-lfs-hub/server#test": {
       "dependsOn": ["@git-lfs-hub/docs#build"],
       "inputs": ["$TURBO_DEFAULT$", "!public/**"]
