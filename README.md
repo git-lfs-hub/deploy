@@ -64,6 +64,22 @@ For a personal account:
 | `cloudflare.accountId`    | Sets the R2 endpoint URL (`S3_ENDPOINT`)  |
 | `github.org[s]` -- either | Org mode: active members of up to 5 orgs get access |
 | `github.user` -- or       | User mode: single GitHub login gets access |
+| `cloudflare.kv.githubCacheId` | KV namespace id that caches GitHub auth lookups (see below) |
+
+**GitHub auth cache (`GITHUB_CACHE`):** the Worker caches GitHub auth results in KV to cut `api.github.com` traffic (token→username 1 day, org/repo access 5 min). The binding is omitted from `wrangler.jsonc` until you set an id, so render → create → paste id → re-render:
+
+```sh
+bun run config                              # renders wrangler.jsonc (no KV binding yet)
+wrangler kv namespace create GITHUB_CACHE   # prints the namespace id
+```
+
+Paste the id into `vars.input.json`, then re-run `bun run config` (step 2) to render the binding:
+
+```json
+{ "cloudflare": { "kv": { "githubCacheId": "<id from above>" } } }
+```
+
+TTLs are fixed in code; no extra vars or secrets needed. Leave `githubCacheId` empty to disable the cache.
 
 See [git-lfs-hub/config](https://github.com/git-lfs-hub/config#vars) for more details.
 
