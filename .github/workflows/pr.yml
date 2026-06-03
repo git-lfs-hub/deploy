@@ -16,6 +16,8 @@ jobs:
     name: "Staging"
     if: github.event.pull_request.head.repo.full_name == github.repository
     uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@main
+    with:
+      test-repo: ${{ vars.GLH_TEST_REPO }}
     secrets: inherit
     permissions: { contents: write }
 

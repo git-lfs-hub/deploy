@@ -15,7 +15,12 @@
     "build": { "dependsOn": ["types"] },
     "deploy": {},
     "//#config": {
-      "inputs": ["vars.input.json", "server/*.template.*", "assets/**"],
+      "inputs": [
+        "vars.input.json",
+        "server/*.template.*",
+        "assets/**",
+        "config/**"
+      ],
       "outputs": [
         "vars.json",
         "wrangler.jsonc",
