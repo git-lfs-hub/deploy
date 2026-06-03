@@ -27,6 +27,7 @@
         "github-app.md",
         "docs/vars.json",
         "docs/assets/**",
+        "e2e/vars.json",
         "server/wrangler.jsonc",
         "server/worker-configuration.d.ts",
         "server/public"
