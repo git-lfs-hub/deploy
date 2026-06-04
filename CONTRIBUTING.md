@@ -7,8 +7,8 @@ Thanks for your interest in Git LFS Hub. This repository is a Turbo monorepo (`s
 |                                                    | **Upstream** (`git-lfs-hub/deploy`)                    | **Fork / template instance**                |
 | -------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------- |
 | Instance config (`vars.json`, `wrangler.jsonc`, …) | Not committed — CI uses `GLH_VARS_JSON`                | Committed in your repo                      |
-| Local ignore for config                            | `.gitignore-upstream` via `scripts/upstream.sh setup`  | Use normal `.gitignore` (no upstream setup) |
-| Pre-commit / CI guard                              | `GLH_UPSTREAM=true` + `scripts/upstream.sh pre-commit` | Skipped (no repo variable)                  |
+| Local ignore for config                            | `.gitignore-upstream` via `config/upstream.sh setup`   | Use normal `.gitignore` (no upstream setup) |
+| Pre-commit / CI guard                              | `GLH_UPSTREAM=true` + `config/upstream.sh pre-commit`  | Skipped (no repo variable)                  |
 
 Fork and template setup: [README.md § Fork or template](README.md#fork-or-template). Install, configuration, build, test, and deploy are also documented there.
 
@@ -18,13 +18,13 @@ Run once per clone:
 
 ```sh
 bun install
-scripts/upstream.sh setup
+config/upstream.sh setup
 ```
 
 `setup` configures:
 
 - `core.excludesFile` → `.gitignore-upstream` (keeps generated config out of `git status` / accidental `git add`)
-- `core.hooksPath` → `.git-hooks-upstream` (runs `scripts/upstream.sh pre-commit` before each commit)
+- a `.git/hooks/pre-commit` hook (runs `config/upstream.sh pre-commit` before each commit)
 
 Do **not** commit paths listed in [`.gitignore-upstream`](.gitignore-upstream). If CI fails with “Do not commit these”, remove them from the index (`git rm --cached <path>`) and rely on `GLH_VARS_JSON` in Actions instead.
 
@@ -34,7 +34,7 @@ On the upstream repo, set **Settings → Secrets and variables → Actions → V
 | -------------- | ------ |
 | `GLH_UPSTREAM` | `true` |
 
-PR and `main` workflows run `scripts/upstream.sh pre-commit` when this variable is set.
+The `Can merge` check enforces the same `.gitignore-upstream` guard in CI when this variable is set.
 
 ## Development
 
