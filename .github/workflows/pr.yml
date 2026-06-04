@@ -31,3 +31,5 @@ jobs:
     permissions: { contents: read }
     steps:
       - uses: git-lfs-hub/ci-cd/actions/check-can-merge@main
+        with:
+          upstream: ${{ vars.GLH_UPSTREAM }}
