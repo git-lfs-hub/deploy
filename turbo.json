@@ -15,6 +15,7 @@
     "build": { "dependsOn": ["types"] },
     "deploy": {},
     "//#config": {
+      "env": ["GLH_ENV", "GLH_VARS_JSON"],
       "inputs": [
         "vars.input.json",
         "server/*.template.*",
