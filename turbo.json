@@ -35,7 +35,6 @@
       "outputs": ["worker-configuration.d.ts"]
     },
     "@git-lfs-hub/docs#build": {
-      "dependsOn": ["//#config"],
       "inputs": ["$TURBO_DEFAULT$", "vars.json"],
       "outputs": ["site/**"]
     },
