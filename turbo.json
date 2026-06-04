@@ -8,39 +8,35 @@
     "inputs": ["*.js*", "*.mjs", "*.ts", "scripts/**", "!*.md", "!*.example"]
   },
   "tasks": {
-    "types": {},
     "test": { "dependsOn": ["types"] },
     "test:watch": { "cache": false, "persistent": true },
     "dev": { "cache": false, "persistent": true },
     "build": { "dependsOn": ["types"] },
-    "deploy": {},
+    "deploy": { "dependsOn": ["types"] },
     "//#config": {
       "env": ["GLH_ENV", "GLH_VARS_JSON"],
-      "inputs": [
-        "vars.input.json",
-        "server/*.template.*",
-        "assets/**",
-        "config/**"
-      ],
+      "inputs": ["vars.input.json", ".config.json", "assets/**", "config/**"],
       "outputs": [
         "vars.json",
-        "wrangler.jsonc",
-        "github-app.md",
         "docs/vars.json",
         "docs/assets/**",
         "e2e/vars.json",
-        "server/wrangler.jsonc",
-        "server/worker-configuration.d.ts",
+        "server/vars.json",
         "server/public"
       ]
     },
-    "@git-lfs-hub/docs#build": {
+    "config": {
       "dependsOn": ["//#config"],
+      "inputs": ["wrangler.template.jsonc", "github-app.template.md"],
+      "outputs": ["wrangler.jsonc", "github-app.md"]
+    },
+    "types": {
+      "dependsOn": ["config"],
+      "outputs": ["worker-configuration.d.ts"]
+    },
+    "@git-lfs-hub/docs#build": {
       "inputs": ["$TURBO_DEFAULT$", "vars.json"],
       "outputs": ["site/**"]
-    },
-    "@git-lfs-hub/server#types": {
-      "dependsOn": ["//#config"]
     },
     "@git-lfs-hub/server#test": {
       "dependsOn": ["@git-lfs-hub/docs#build", "types"],
@@ -55,7 +51,7 @@
       "outputs": ["dist/**"]
     },
     "@git-lfs-hub/server#deploy": {
-      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
     }

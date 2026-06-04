@@ -42,13 +42,13 @@ Use [Bun](https://bun.sh) (not Node) from the repo root:
 
 ```sh
 bun install
-bun run config          # after editing vars.input.json
+turbo run config        # after editing vars.input.json (`config` is a reserved Turbo subcommand → use `run`)
 turbo test              # tests + build pipeline
 turbo dev               # local dev
 turbo build
 ```
 
-`wrangler.jsonc` is generated at the repo root and symlinked into `server/` by `config/cli.sh` (the `bun run config` script). Edit templates under `server/` (`wrangler.template.jsonc`, etc.) and `vars.input.json` — not the generated root files on upstream.
+`turbo run config` renders `vars.json` at the root (`//#config`) and each worker's `wrangler.jsonc` from it (`server#config`). Edit templates under `server/` (`wrangler.template.jsonc`, etc.) and `vars.input.json` — not the generated files on upstream.
 
 Regenerate Cloudflare types after binding changes:
 

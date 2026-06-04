@@ -81,16 +81,18 @@ Turbo monorepo with four workspaces, all git submodules of this repo:
 |-----------|-------------|
 | `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
 | `docs/` | Static docs site (`@docmd/core`) — built into `server/public/` |
-| `config/` | Vars renderer ([`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config)) — invoked via `bun run config` (root script → `config/cli.sh`) and wired into Turbo as `//#config` |
+| `config/` | Vars renderer ([`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config)) — `//#config` renders `vars.json` and symlinks it into each workspace; each worker's `#config` task renders its own `wrangler.jsonc` from that |
 | `e2e/` | Staging deploy + smoke tests (vitest); reusable GitHub Actions workflow lives in [`git-lfs-hub/e2e`](https://github.com/git-lfs-hub/e2e) |
 
 ## Commands
 
 ```sh
-turbo config    # merge vars.input.json (or vars.json) + defaults → vars.json, wrangler.jsonc, github-app.md
-turbo build     # build docs → copy into server/public/ → bundle Worker
-turbo test      # run all workspace tests
-turbo deploy    # deploy Worker to Cloudflare
+turbo run config  # //#config → vars.json (symlinked into each workspace); server#config → server/wrangler.jsonc + github-app.md
+turbo build       # build docs → copy into server/public/ → bundle Worker
+turbo test        # run all workspace tests
+turbo deploy      # deploy Worker to Cloudflare
 ```
 
-`wrangler.jsonc` lives at repo root, symlinked into `server/` by `config/cli.sh` (along with `worker-configuration.d.ts` and `server/public/` → `docs/site/`). Edit at root, not inside `server/`. `server/wrangler.template.jsonc` is the Handlebars template rendered by `bun run config` / `turbo config`.
+(`config` is a reserved Turbo subcommand, so it's `turbo run config`, not `turbo config`.)
+
+`vars.json` is rendered at the deploy root by `//#config` and symlinked into each workspace (docs, e2e, server). Each worker's `#config` task renders its own `server/wrangler.jsonc` + `github-app.md` from that local `vars.json`; `server/worker-configuration.d.ts` comes from `bun run types`. Don't edit the generated files; edit `server/wrangler.template.jsonc`, the Handlebars template `wrangler.jsonc` is rendered from. (`config/cli.sh` also symlinks `server/public/` → `docs/site/`.)
