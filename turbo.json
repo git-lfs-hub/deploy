@@ -51,7 +51,7 @@
       "outputs": ["dist/**"]
     },
     "@git-lfs-hub/server#deploy": {
-      "dependsOn": ["@git-lfs-hub/docs#build"],
+      "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
     }
