@@ -4,7 +4,7 @@ on:
   pull_request:
   workflow_dispatch: # Can run manually from the Actions tab
 
-permissions: {}
+permissions: { contents: read }
 
 jobs:
   ci:
@@ -28,7 +28,6 @@ jobs:
   can-merge:
     name: Can merge
     runs-on: ubuntu-latest
-    permissions: { contents: read }
     steps:
       - uses: git-lfs-hub/ci-cd/actions/check-can-merge@main
         with:
