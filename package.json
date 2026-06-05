@@ -12,7 +12,6 @@
     "deploy": "turbo deploy"
   },
   "workspaces": [
-
     "config",
     "docs",
     "e2e",
