@@ -38,6 +38,8 @@
         "@docmd/core": "^0.8.4",
         "@git-lfs-hub/config": "file:../config",
         "@types/bun": "^1.3.14",
+        "@typescript/native-preview": "^7.0.0-dev.20260604.1",
+        "oxlint": "^1.68.0",
       },
       "peerDependencies": {
         "typescript": "^6.0.3",
@@ -822,13 +824,15 @@
 
     "@cspotcode/source-map-support/@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.9", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.0.3", "@jridgewell/sourcemap-codec": "^1.4.10" } }, "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ=="],
 
-    "@git-lfs-hub/docs/@git-lfs-hub/config": ["@git-lfs-hub/config@file:config", { "dependencies": { "ajv": "^8.20.0", "handlebars": "^4.7.9" }, "devDependencies": { "@types/bun": "^1.3.14", "@typescript/native-preview": "^7.0.0-dev.20260602.1", "@vitest/coverage-istanbul": "^4.1.7", "vitest": "^4.1.7" }, "peerDependencies": { "typescript": "^6.0.3" }, "bin": { "git-lfs-hub-config": "./src/cli.ts" } }],
+    "@git-lfs-hub/docs/@git-lfs-hub/config": ["@git-lfs-hub/config@file:config", { "dependencies": { "ajv": "^8.20.0", "handlebars": "^4.7.9" }, "devDependencies": { "@types/bun": "^1.3.14", "@typescript/native-preview": "^7.0.0-dev.20260602.1", "@vitest/coverage-istanbul": "^4.1.7", "oxlint": "^1.68.0", "vitest": "^4.1.7" }, "peerDependencies": { "typescript": "^6.0.3" }, "bin": { "git-lfs-hub-config": "./src/cli.ts" } }],
+
+    "@git-lfs-hub/docs/@typescript/native-preview": ["@typescript/native-preview@7.0.0-dev.20260604.1", "", { "optionalDependencies": { "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-arm": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-x64": "7.0.0-dev.20260604.1", "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-win32-x64": "7.0.0-dev.20260604.1" }, "bin": { "tsgo": "bin/tsgo.js" } }, "sha512-A3/9yZTt2V5NlDURcVJ4mN2YjfeQTXCRyLuENKrNdGhO+y59mC/2UDr7UvpB3Li+83TRAuhDN8SBoM+7gkHdzQ=="],
 
     "@git-lfs-hub/e2e/@git-lfs-hub/lib": ["@git-lfs-hub/lib@file:lib", { "dependencies": { "@octokit/rest": "^22.0.1", "hono": "^4.12.23", "jose": "^6.2.3" }, "devDependencies": { "@vitest/coverage-istanbul": "^4.1.7", "vitest": "^4.1.7" } }],
 
     "@git-lfs-hub/lib/@typescript/native-preview": ["@typescript/native-preview@7.0.0-dev.20260604.1", "", { "optionalDependencies": { "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-arm": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-x64": "7.0.0-dev.20260604.1", "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-win32-x64": "7.0.0-dev.20260604.1" }, "bin": { "tsgo": "bin/tsgo.js" } }, "sha512-A3/9yZTt2V5NlDURcVJ4mN2YjfeQTXCRyLuENKrNdGhO+y59mC/2UDr7UvpB3Li+83TRAuhDN8SBoM+7gkHdzQ=="],
 
-    "@git-lfs-hub/server/@git-lfs-hub/config": ["@git-lfs-hub/config@file:config", { "dependencies": { "ajv": "^8.20.0", "handlebars": "^4.7.9" }, "devDependencies": { "@types/bun": "^1.3.14", "@typescript/native-preview": "^7.0.0-dev.20260602.1", "@vitest/coverage-istanbul": "^4.1.7", "vitest": "^4.1.7" }, "peerDependencies": { "typescript": "^6.0.3" }, "bin": { "git-lfs-hub-config": "./src/cli.ts" } }],
+    "@git-lfs-hub/server/@git-lfs-hub/config": ["@git-lfs-hub/config@file:config", { "dependencies": { "ajv": "^8.20.0", "handlebars": "^4.7.9" }, "devDependencies": { "@types/bun": "^1.3.14", "@typescript/native-preview": "^7.0.0-dev.20260602.1", "@vitest/coverage-istanbul": "^4.1.7", "oxlint": "^1.68.0", "vitest": "^4.1.7" }, "peerDependencies": { "typescript": "^6.0.3" }, "bin": { "git-lfs-hub-config": "./src/cli.ts" } }],
 
     "@git-lfs-hub/server/@git-lfs-hub/lib": ["@git-lfs-hub/lib@file:lib", { "dependencies": { "@octokit/rest": "^22.0.1", "hono": "^4.12.23", "jose": "^6.2.3" }, "devDependencies": { "@vitest/coverage-istanbul": "^4.1.7", "vitest": "^4.1.7" } }],
 
@@ -896,6 +900,20 @@
 
     "@cloudflare/vitest-pool-workers/esbuild/@esbuild/win32-x64": ["@esbuild/win32-x64@0.27.3", "", { "os": "win32", "cpu": "x64" }, "sha512-4uJGhsxuptu3OcpVAzli+/gWusVGwZZHTlS63hh++ehExkVT8SgiEf7/uC/PclrPPkLhZqGgCTjd0VWLo6xMqA=="],
 
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-darwin-arm64": ["@typescript/native-preview-darwin-arm64@7.0.0-dev.20260604.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-zs616um9UuaODLsNlCu5Aw95rFcTV4u3hVt090r6k0lVvTxfaJOv8HKA6BpIotcEYlZlMQowrMSYCCdedo7iyA=="],
+
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-darwin-x64": ["@typescript/native-preview-darwin-x64@7.0.0-dev.20260604.1", "", { "os": "darwin", "cpu": "x64" }, "sha512-pOdNAf2pwc9JBjo8gUsvLs5uqg7d0AhYXfE8/3zvPKBlIZG+mTcvEWW1hPawlWxXzf/vxnP4dgYwUHAMDghhKA=="],
+
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-linux-arm": ["@typescript/native-preview-linux-arm@7.0.0-dev.20260604.1", "", { "os": "linux", "cpu": "arm" }, "sha512-IKaZL3i5HKmKqwb2IZEXW1j68fVg1HsvAaXkbrkOIG/J5Eyksu5tEnTzucrIY1oPdzgHT+y2HpDIYp2sGeHFvw=="],
+
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-linux-arm64": ["@typescript/native-preview-linux-arm64@7.0.0-dev.20260604.1", "", { "os": "linux", "cpu": "arm64" }, "sha512-GjIrt6YHP3bbOWBCCE08SlBSDf84Lnjn3Td822/lOX9nm6ODlA/HI7rtGh7KzS/fxehep2Vy4dXU4Il12X1s5A=="],
+
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-linux-x64": ["@typescript/native-preview-linux-x64@7.0.0-dev.20260604.1", "", { "os": "linux", "cpu": "x64" }, "sha512-twQ7XDjsmaHIevN1MjeRYIVLUPL0fBm8A0jg1FhGYPckhTxEBiHIpJf9E//eFidAdrEHjeTSBP1jJw3GNAensg=="],
+
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-win32-arm64": ["@typescript/native-preview-win32-arm64@7.0.0-dev.20260604.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-QBRxaVT3SFiNfOhwYb/56ddpHWPMFdfiJ4zkFJIjaAXeZ/ssWNHM9lH7yR++GrE9VTsUZ4eVSZfOmQbzRERhgw=="],
+
+    "@git-lfs-hub/docs/@typescript/native-preview/@typescript/native-preview-win32-x64": ["@typescript/native-preview-win32-x64@7.0.0-dev.20260604.1", "", { "os": "win32", "cpu": "x64" }, "sha512-hR7YHoRpm88Q86gK6/IMayWUA+ROdHGzOPKK8EBp1xD/Cg2Bh5AXbut8HcyUDx/bcGQvnuht/XsW47bT3to9mg=="],
+
     "@git-lfs-hub/lib/@typescript/native-preview/@typescript/native-preview-darwin-arm64": ["@typescript/native-preview-darwin-arm64@7.0.0-dev.20260604.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-zs616um9UuaODLsNlCu5Aw95rFcTV4u3hVt090r6k0lVvTxfaJOv8HKA6BpIotcEYlZlMQowrMSYCCdedo7iyA=="],
 
     "@git-lfs-hub/lib/@typescript/native-preview/@typescript/native-preview-darwin-x64": ["@typescript/native-preview-darwin-x64@7.0.0-dev.20260604.1", "", { "os": "darwin", "cpu": "x64" }, "sha512-pOdNAf2pwc9JBjo8gUsvLs5uqg7d0AhYXfE8/3zvPKBlIZG+mTcvEWW1hPawlWxXzf/vxnP4dgYwUHAMDghhKA=="],
@@ -909,6 +927,8 @@
     "@git-lfs-hub/lib/@typescript/native-preview/@typescript/native-preview-win32-arm64": ["@typescript/native-preview-win32-arm64@7.0.0-dev.20260604.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-QBRxaVT3SFiNfOhwYb/56ddpHWPMFdfiJ4zkFJIjaAXeZ/ssWNHM9lH7yR++GrE9VTsUZ4eVSZfOmQbzRERhgw=="],
 
     "@git-lfs-hub/lib/@typescript/native-preview/@typescript/native-preview-win32-x64": ["@typescript/native-preview-win32-x64@7.0.0-dev.20260604.1", "", { "os": "win32", "cpu": "x64" }, "sha512-hR7YHoRpm88Q86gK6/IMayWUA+ROdHGzOPKK8EBp1xD/Cg2Bh5AXbut8HcyUDx/bcGQvnuht/XsW47bT3to9mg=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview": ["@typescript/native-preview@7.0.0-dev.20260604.1", "", { "optionalDependencies": { "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-arm": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-linux-x64": "7.0.0-dev.20260604.1", "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260604.1", "@typescript/native-preview-win32-x64": "7.0.0-dev.20260604.1" }, "bin": { "tsgo": "bin/tsgo.js" } }, "sha512-A3/9yZTt2V5NlDURcVJ4mN2YjfeQTXCRyLuENKrNdGhO+y59mC/2UDr7UvpB3Li+83TRAuhDN8SBoM+7gkHdzQ=="],
 
     "wrangler/esbuild/@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.27.3", "", { "os": "aix", "cpu": "ppc64" }, "sha512-9fJMTNFTWZMh5qwrBItuziu834eOCUcEqymSH7pY+zoMVEZg3gcPuBNxH1EvfVYe9h0x/Ptw8KBzv7qxb7l8dg=="],
 
@@ -961,5 +981,19 @@
     "wrangler/esbuild/@esbuild/win32-ia32": ["@esbuild/win32-ia32@0.27.3", "", { "os": "win32", "cpu": "ia32" }, "sha512-QLKSFeXNS8+tHW7tZpMtjlNb7HKau0QDpwm49u0vUp9y1WOF+PEzkU84y9GqYaAVW8aH8f3GcBck26jh54cX4Q=="],
 
     "wrangler/esbuild/@esbuild/win32-x64": ["@esbuild/win32-x64@0.27.3", "", { "os": "win32", "cpu": "x64" }, "sha512-4uJGhsxuptu3OcpVAzli+/gWusVGwZZHTlS63hh++ehExkVT8SgiEf7/uC/PclrPPkLhZqGgCTjd0VWLo6xMqA=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-darwin-arm64": ["@typescript/native-preview-darwin-arm64@7.0.0-dev.20260604.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-zs616um9UuaODLsNlCu5Aw95rFcTV4u3hVt090r6k0lVvTxfaJOv8HKA6BpIotcEYlZlMQowrMSYCCdedo7iyA=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-darwin-x64": ["@typescript/native-preview-darwin-x64@7.0.0-dev.20260604.1", "", { "os": "darwin", "cpu": "x64" }, "sha512-pOdNAf2pwc9JBjo8gUsvLs5uqg7d0AhYXfE8/3zvPKBlIZG+mTcvEWW1hPawlWxXzf/vxnP4dgYwUHAMDghhKA=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-linux-arm": ["@typescript/native-preview-linux-arm@7.0.0-dev.20260604.1", "", { "os": "linux", "cpu": "arm" }, "sha512-IKaZL3i5HKmKqwb2IZEXW1j68fVg1HsvAaXkbrkOIG/J5Eyksu5tEnTzucrIY1oPdzgHT+y2HpDIYp2sGeHFvw=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-linux-arm64": ["@typescript/native-preview-linux-arm64@7.0.0-dev.20260604.1", "", { "os": "linux", "cpu": "arm64" }, "sha512-GjIrt6YHP3bbOWBCCE08SlBSDf84Lnjn3Td822/lOX9nm6ODlA/HI7rtGh7KzS/fxehep2Vy4dXU4Il12X1s5A=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-linux-x64": ["@typescript/native-preview-linux-x64@7.0.0-dev.20260604.1", "", { "os": "linux", "cpu": "x64" }, "sha512-twQ7XDjsmaHIevN1MjeRYIVLUPL0fBm8A0jg1FhGYPckhTxEBiHIpJf9E//eFidAdrEHjeTSBP1jJw3GNAensg=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-win32-arm64": ["@typescript/native-preview-win32-arm64@7.0.0-dev.20260604.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-QBRxaVT3SFiNfOhwYb/56ddpHWPMFdfiJ4zkFJIjaAXeZ/ssWNHM9lH7yR++GrE9VTsUZ4eVSZfOmQbzRERhgw=="],
+
+    "@git-lfs-hub/server/@git-lfs-hub/config/@typescript/native-preview/@typescript/native-preview-win32-x64": ["@typescript/native-preview-win32-x64@7.0.0-dev.20260604.1", "", { "os": "win32", "cpu": "x64" }, "sha512-hR7YHoRpm88Q86gK6/IMayWUA+ROdHGzOPKK8EBp1xD/Cg2Bh5AXbut8HcyUDx/bcGQvnuht/XsW47bT3to9mg=="],
   }
 }
