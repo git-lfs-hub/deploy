@@ -51,16 +51,13 @@
       "cache": false
     },
     "@git-lfs-hub/admin#test": {
-      "dependsOn": ["//#config"],
       "inputs": ["$TURBO_DEFAULT$", "!public/**"]
     },
     "@git-lfs-hub/admin#build": {
-      "dependsOn": ["//#config"],
       "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!test/**"],
       "outputs": ["dist/**"]
     },
     "@git-lfs-hub/admin#deploy": {
-      "dependsOn": ["//#config"],
       "env": ["CLOUDFLARE_API_TOKEN"],
       "cache": false
     }
