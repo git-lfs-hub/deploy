@@ -58,12 +58,12 @@ For a personal account:
 }
 ```
 
-| Key | Description |
-|:----|:------------|
-| `cloudflare.accountSlug`  | Sets the Worker URL prefix (`GITHUB_APP_HOME`) |
-| `cloudflare.accountId`    | Sets the R2 endpoint URL (`S3_ENDPOINT`)  |
-| `github.org[s]` -- either | Org mode: active members of up to 5 orgs get access |
-| `github.user` -- or       | User mode: single GitHub login gets access |
+| Key                           | Description                                                 |
+| :---------------------------- | :---------------------------------------------------------- |
+| `cloudflare.accountSlug`      | Sets the Worker URL prefix (`GITHUB_APP_HOME`)              |
+| `cloudflare.accountId`        | Sets the R2 endpoint URL (`S3_ENDPOINT`)                    |
+| `github.org[s]` -- either     | Org mode: active members of up to 5 orgs get access         |
+| `github.user` -- or           | User mode: single GitHub login gets access                  |
 | `cloudflare.kv.githubCacheId` | KV namespace id that caches GitHub auth lookups (see below) |
 
 **GitHub auth cache (`GITHUB_CACHE`):** the Worker caches GitHub auth results in KV to cut `api.github.com` traffic (token→username 1 day, org/repo access 5 min). The binding is omitted from `wrangler.jsonc` until you set an id, so render → create → paste id → re-render:
@@ -89,11 +89,11 @@ See [git-lfs-hub/config](https://github.com/git-lfs-hub/config#vars) for more de
 bun run config  # or:   turbo config
 ```
 
-* **Commit** `vars.input.json` and the rendered artifacts in your repo:
-  * `vars.json`,
-  * `wrangler.jsonc` and
-  * `github-app.md` (optional).
-* **Or** set the `GLH_VARS_JSON` actions variable from `vars[.input].json` in CI.
+- **Commit** `vars.input.json` and the rendered artifacts in your repo:
+  - `vars.json`,
+  - `wrangler.jsonc` and
+  - `github-app.md` (optional).
+- **Or** set the `GLH_VARS_JSON` actions variable from `vars[.input].json` in CI.
 
 **3. Create an R2 API token:**
 
@@ -151,16 +151,16 @@ Both workflows check out submodules, install dependencies (frozen lockfile, cach
 
 Configure under **Settings → Secrets and variables → Actions**:
 
-| Secrets | Description |
-|:------- |:----------- |
+| Secrets                | Description                                                           |
+| :--------------------- | :-------------------------------------------------------------------- |
 | `CLOUDFLARE_API_TOKEN` | Cloudflare API token with Worker deploy permissions (deploy job only) |
 
-| Variables | Description |
-|:--------- |:----------- |
+| Variables       | Description                                        |
+| :-------------- | :------------------------------------------------- |
 | `GLH_VARS_JSON` | Contents of `vars[.input].json` (if not committed) |
-| `TURBO_TEAM` | Turbo team slug (optional) |
-| `TURBO_TEAMID` | Turbo team ID (optional) |
-| `TURBO_TOKEN` | Turbo remote cache token (optional) |
+| `TURBO_TEAM`    | Turbo team slug (optional)                         |
+| `TURBO_TEAMID`  | Turbo team ID (optional)                           |
+| `TURBO_TOKEN`   | Turbo remote cache token (optional)                |
 
 ## Staging
 
@@ -170,11 +170,11 @@ End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-l
 
 ### Configure under **Settings → Secrets and variables → Actions**
 
-| Secrets | Description |
-|:------- |:----------- |
-| `GLH_STAGING_GITHUB_PAT` | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
-| `GLH_STAGING_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`. |
-| `GLH_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only. |
+| Secrets                    | Description                                                                                                                                                              |
+| :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GLH_STAGING_GITHUB_PAT`   | Classic PAT for a bot account that is an active member of `GITHUB_ORG` (`read:org`) with Write on `git-lfs-hub/test` (`repo`). Used by both PR e2e and `main.yml` smoke. |
+| `GLH_STAGING_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`.                                                                               |
+| `GLH_LOGIN_SECRET`         | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only.                                                                   |
 
 Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
 
@@ -196,12 +196,9 @@ Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudfla
 [cd-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/CD%20/%20Deploy?icon=cloudflareworkers&label=CD
 [e2e-badge]: https://badgen.net/github/checks/git-lfs-hub/deploy/main/E2E%20/%20Test?icon=gitlfs&label=E2E
 [gh-wf-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/main.yml
-
 [codeql-badge]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql/badge.svg
 [codeql-href]: https://github.com/git-lfs-hub/deploy/actions/workflows/github-code-scanning/codeql
-
 [socket-badge]: https://badgen.net/static/Socket/report/blue?icon=socket
 [socket-href]: https://socket.dev/dashboard/org/git-lfs-hub/repo/@git-lfs-hub/deploy
-
 [license-badge]: https://badgen.net/github/license/git-lfs-hub/deploy
 [license-href]: LICENSE.md
