@@ -9,6 +9,7 @@ Guidelines to reduce common LLM coding mistakes. Merge with project-specific ins
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
 
 Before implementing:
+
 - State assumptions explicitly. If uncertain, ask.
 - If multiple interpretations exist, present them - don't pick silently.
 - If simpler approach exists, say so. Push back when warranted.
@@ -31,12 +32,14 @@ Before implementing:
 **Touch only what you must. Clean up only your own mess.**
 
 When editing existing code:
+
 - Don't "improve" adjacent code, comments, or formatting.
 - Don't refactor things that aren't broken.
 - Match existing style, even if you'd do it differently.
 - If you notice unrelated dead code, mention it - don't delete it.
 
 When your changes create orphans:
+
 - Remove imports/variables/functions that YOUR changes made unused.
 - Don't remove pre-existing dead code unless asked.
 
@@ -47,11 +50,13 @@ Test: every changed line should trace to user's request.
 **Define success criteria. Loop until verified.**
 
 Transform tasks into verifiable goals:
+
 - "Add validation" → "Write tests for invalid inputs, then make them pass"
 - "Fix the bug" → "Write a test that reproduces it, then make it pass"
 - "Refactor X" → "Ensure tests pass before and after"
 
 For multi-step tasks, state brief plan:
+
 ```
 1. [Step] → verify: [check]
 2. [Step] → verify: [check]
@@ -77,12 +82,12 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 Turbo monorepo with four workspaces, all git submodules of this repo:
 
-| Workspace | Description |
-|-----------|-------------|
-| `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks |
-| `docs/` | Static docs site (`@docmd/core`) — built into `server/public/` |
+| Workspace | Description                                                                                                                                                                                                                   |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `server/` | Cloudflare Worker (Hono) — Git LFS API, GitHub OAuth, R2 storage, Durable Object locks                                                                                                                                        |
+| `docs/`   | Static docs site (`@docmd/core`) — built into `server/public/`                                                                                                                                                                |
 | `config/` | Vars renderer ([`@git-lfs-hub/config`](https://github.com/git-lfs-hub/config)) — `//#config` renders `vars.json` and symlinks it into each workspace; each worker's `#config` task renders its own `wrangler.jsonc` from that |
-| `e2e/` | Staging deploy + smoke tests (vitest); reusable GitHub Actions workflow lives in [`git-lfs-hub/e2e`](https://github.com/git-lfs-hub/e2e) |
+| `e2e/`    | Staging deploy + smoke tests (vitest); reusable GitHub Actions workflow lives in [`git-lfs-hub/e2e`](https://github.com/git-lfs-hub/e2e)                                                                                      |
 
 ## Commands
 

@@ -4,11 +4,11 @@ Thanks for your interest in Git LFS Hub. This repository is a Turbo monorepo (`s
 
 ## Upstream vs fork
 
-|                                                    | **Upstream** (`git-lfs-hub/deploy`)                    | **Fork / template instance**                |
-| -------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------- |
-| Instance config (`vars.json`, `wrangler.jsonc`, …) | Not committed — CI uses `GLH_VARS_JSON`                | Committed in your repo                      |
-| Local ignore for config                            | `.gitignore-upstream` via `config/upstream.sh setup`   | Use normal `.gitignore` (no upstream setup) |
-| Pre-commit / CI guard                              | `GLH_UPSTREAM=true` + `config/upstream.sh pre-commit`  | Skipped (no repo variable)                  |
+|                                                    | **Upstream** (`git-lfs-hub/deploy`)                   | **Fork / template instance**                |
+| -------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------- |
+| Instance config (`vars.json`, `wrangler.jsonc`, …) | Not committed — CI uses `GLH_VARS_JSON`               | Committed in your repo                      |
+| Local ignore for config                            | `.gitignore-upstream` via `config/upstream.sh setup`  | Use normal `.gitignore` (no upstream setup) |
+| Pre-commit / CI guard                              | `GLH_UPSTREAM=true` + `config/upstream.sh pre-commit` | Skipped (no repo variable)                  |
 
 Fork and template setup: [README.md § Fork or template](README.md#fork-or-template). Install, configuration, build, test, and deploy are also documented there.
 

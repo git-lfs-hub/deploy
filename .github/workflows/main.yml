@@ -1,20 +1,20 @@
 name: Main
 
 on:
-  push: { branches: ["main"] }
+  push: { branches: ['main'] }
   workflow_dispatch: # Can run manually from the Actions tab
 
 permissions: { contents: read }
 
 jobs:
   ci:
-    name: "CI"
+    name: 'CI'
     uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@main
     secrets:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
   cd:
-    name: "CD"
+    name: 'CD'
     needs: ci
     uses: git-lfs-hub/ci-cd/.github/workflows/cd.yml@main
     secrets:
@@ -22,7 +22,7 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
   e2e:
-    name: "E2E"
+    name: 'E2E'
     needs: cd
     if: ${{ vars.GLH_TEST_REPO != '' }}
     uses: git-lfs-hub/ci-cd/.github/workflows/e2e.yml@main

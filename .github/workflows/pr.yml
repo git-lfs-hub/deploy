@@ -8,13 +8,13 @@ permissions: { contents: read }
 
 jobs:
   ci:
-    name: "CI"
+    name: 'CI'
     uses: git-lfs-hub/ci-cd/.github/workflows/ci.yml@main
     secrets:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
   staging:
-    name: "Staging"
+    name: 'Staging'
     if: github.event.pull_request.head.repo.full_name == github.repository
     uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@main
     with:
