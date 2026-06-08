@@ -12,7 +12,9 @@
     "config": "turbo run config",
     "test": "turbo run test",
     "test:watch": "turbo run test-watch",
-    "dev": "turbo run dev",
+    "dev": "cd admin && bun run dev",
+    "dev:docs": "cd docs && bun run dev",
+    "dev:server": "cd server && bun run dev",
     "build": "turbo run build",
     "deploy": "turbo run deploy"
   },

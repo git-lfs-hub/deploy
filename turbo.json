@@ -10,7 +10,6 @@
     "check": { "dependsOn": ["types"] },
     "test": { "dependsOn": ["types"] },
     "test:watch": { "cache": false, "persistent": true },
-    "dev": { "cache": false, "persistent": true },
     "build": { "dependsOn": ["types"] },
     "deploy": { "dependsOn": ["types"] },
     "//#config:root": {
