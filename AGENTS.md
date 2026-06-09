@@ -77,6 +77,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - Main flows first, edge cases and error handling last
 - Callers before called
 - Tests mirror main file order
+- Keep comments brief. Focus on the "why" and non-obvious.
 
 ## Project structure
 
