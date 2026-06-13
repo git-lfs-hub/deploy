@@ -16,13 +16,14 @@ jobs:
   staging:
     name: 'Staging'
     if: github.event.pull_request.head.repo.full_name == github.repository
-    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@main # re-run all jobs
+    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@lfs-admin
     with:
       test-repo: ${{ vars.GLH_TEST_REPO }}
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       GLH_STAGING_GITHUB_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
       GLH_STAGING_LOGIN_SECRET: ${{ secrets.GLH_STAGING_LOGIN_SECRET }}
+      GLH_STAGING_ADMIN_LOGIN_SECRET: ${{ secrets.GLH_STAGING_ADMIN_LOGIN_SECRET }}
     permissions: { contents: write }
 
   can-merge:
