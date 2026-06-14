@@ -66,11 +66,13 @@
     "@git-lfs-hub/server#deploy": {
       "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "env": ["CLOUDFLARE_API_TOKEN"],
+      "passThroughEnv": ["WRANGLER_OUTPUT_FILE_PATH"],
       "cache": false
     },
     "@git-lfs-hub/admin#deploy": {
       "dependsOn": ["types"],
       "env": ["CLOUDFLARE_API_TOKEN"],
+      "passThroughEnv": ["WRANGLER_OUTPUT_FILE_PATH"],
       "cache": false
     }
   }
