@@ -32,4 +32,5 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       GLH_STAGING_GITHUB_PAT: ${{ secrets.GLH_STAGING_GITHUB_PAT }}
       GLH_LOGIN_SECRET: ${{ secrets.GLH_LOGIN_SECRET }}
+      GLH_ADMIN_LOGIN_SECRET: ${{ secrets.GLH_ADMIN_LOGIN_SECRET }}
     permissions: { contents: write }

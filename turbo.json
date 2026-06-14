@@ -1,3 +1,4 @@
+// Cross-submodule CI test / build / deploy tasks.
 {
   "$schema": "./node_modules/turbo/schema.json",
   "futureFlags": { "globalConfiguration": true },
@@ -6,12 +7,6 @@
     "inputs": ["*.js*", "*.mjs", "*.ts", "scripts/**", "!*.md", "!*.example"]
   },
   "tasks": {
-    "check": { "dependsOn": ["types"] },
-    "test": { "dependsOn": ["types"] },
-    "test:watch": { "cache": false, "persistent": true },
-    "dev": { "cache": false, "persistent": true },
-    "build": { "dependsOn": ["types"] },
-    "deploy": { "dependsOn": ["types"] },
     "//#config:root": {
       "env": ["GLH_ENV", "GLH_VARS_JSON"],
       "inputs": ["vars.input.json", ".config.json", "assets/**", "config/**"],
@@ -29,24 +24,55 @@
       "inputs": ["wrangler.template.jsonc", "github-app.template.md"],
       "outputs": ["wrangler.jsonc", "github-app.md"]
     },
-    "types": { "dependsOn": ["config"], "outputs": ["worker-configuration.d.ts"] },
-    "@git-lfs-hub/docs#build": {
-      "inputs": ["$TURBO_DEFAULT$", "vars.json"],
-      "outputs": ["site/**"]
+    "types": {
+      "dependsOn": ["config"],
+      "outputs": ["worker-configuration.d.ts"]
+    },
+    "check": {
+      "dependsOn": ["types"]
+    },
+    "test": {
+      "dependsOn": ["//#config:root"]
     },
     "@git-lfs-hub/server#test": {
       "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "inputs": ["$TURBO_DEFAULT$", "!public/**"]
     },
-    "@git-lfs-hub/server#test:watch": { "dependsOn": ["@git-lfs-hub/docs#build", "types"] },
+    "@git-lfs-hub/admin#test": {
+      "dependsOn": ["types"],
+      "inputs": ["$TURBO_DEFAULT$", "!public/**"]
+    },
+    "build": {
+      "dependsOn": ["//#config:root"]
+    },
+    "@git-lfs-hub/docs#build": {
+      "dependsOn": ["//#config:root"],
+      "inputs": ["$TURBO_DEFAULT$", "vars.json"],
+      "outputs": ["site/**"]
+    },
     "@git-lfs-hub/server#build": {
       "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!test/**"],
       "outputs": ["dist/**"]
     },
+    "@git-lfs-hub/admin#build": {
+      "dependsOn": ["types"],
+      "inputs": ["$TURBO_DEFAULT$", "wrangler.jsonc", "!test/**"],
+      "outputs": ["dist/**"]
+    },
+    "deploy": {
+      "dependsOn": ["//#config:root"]
+    },
     "@git-lfs-hub/server#deploy": {
       "dependsOn": ["@git-lfs-hub/docs#build", "types"],
       "env": ["CLOUDFLARE_API_TOKEN"],
+      "passThroughEnv": ["WRANGLER_OUTPUT_FILE_PATH"],
+      "cache": false
+    },
+    "@git-lfs-hub/admin#deploy": {
+      "dependsOn": ["types"],
+      "env": ["CLOUDFLARE_API_TOKEN"],
+      "passThroughEnv": ["WRANGLER_OUTPUT_FILE_PATH"],
       "cache": false
     }
   }

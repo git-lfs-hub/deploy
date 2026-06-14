@@ -3,3 +3,4 @@
 # pre-commit hook; the check-can-merge gate enforces it in CI when GLH_UPSTREAM
 # is set.
 vars.input.json
+vars.input.*.json

@@ -176,7 +176,7 @@ End-to-end test scripts live in the [`git-lfs-hub/e2e`](https://github.com/git-l
 | `GLH_STAGING_LOGIN_SECRET` | Same hex value as `LOGIN_SECRET` uploaded to the staging Worker via `wrangler secret put`.                                                                               |
 | `GLH_LOGIN_SECRET`         | Same hex value as `LOGIN_SECRET` uploaded to the production Worker. Used by `main.yml` smoke job only.                                                                   |
 
-Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to `cloudflare.workerName` and `s3.bucket` internally.
+Staging reuses the production `GLH_VARS_JSON`, appending `-staging` to the account-global fields (`cloudflare.workerName`, `cloudflare.admin.workerName`, `s3.bucket`, `s3.backup.bucket`, `admin.slack.channel`) internally. For a value that isn't just the prod name plus `-staging` (an opaque Slack channel ID, an off-convention bucket), set it to a `{ prod, staging }` object in `GLH_VARS_JSON` — see [config per-env overrides](config/README.md#per-env-overrides).
 
 ### One-time staging setup
 
