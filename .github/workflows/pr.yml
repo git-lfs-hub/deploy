@@ -16,7 +16,7 @@ jobs:
   staging:
     name: 'Staging'
     if: github.event.pull_request.head.repo.full_name == github.repository
-    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@lfs-admin # force rerun
+    uses: git-lfs-hub/ci-cd/.github/workflows/staging.yml@lfs-admin
     with:
       test-repo: ${{ vars.GLH_TEST_REPO }}
     secrets:
