@@ -16,7 +16,9 @@
         "docs/assets/**",
         "e2e/vars.json",
         "server/vars.json",
-        "server/public"
+        "server/public",
+        "admin/vars.json",
+        "admin/public/favicon.png"
       ]
     },
     "config": {
