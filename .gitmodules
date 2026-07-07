@@ -22,3 +22,11 @@
 	path = admin
 	url = git@github.com:git-lfs-hub/admin.git
 	branch = main
+[submodule "compute"]
+	path = compute
+	url = git@github.com:git-lfs-hub/compute.git
+	branch = main
+[submodule "compute-node"]
+	path = compute-node
+	url = git@github.com:git-lfs-hub/compute-node.git
+	branch = main

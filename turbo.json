@@ -18,7 +18,8 @@
         "server/vars.json",
         "server/public",
         "admin/vars.json",
-        "admin/public/favicon.png"
+        "admin/public/favicon.png",
+        "compute/vars.json"
       ]
     },
     "config": {

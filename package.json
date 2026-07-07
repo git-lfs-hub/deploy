@@ -25,7 +25,8 @@
     "docs",
     "e2e",
     "lib",
-    "server"
+    "server",
+    "compute*"
   ],
   "devDependencies": {
     "turbo": "^2.9.14"
