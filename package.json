@@ -16,7 +16,8 @@
     "dev:docs": "cd docs && bun run dev",
     "dev:server": "cd server && bun run dev",
     "build": "turbo run build",
-    "deploy": "turbo run deploy"
+    "deploy": "turbo run deploy",
+    "postinstall": "bash scripts/prune-bun-git.sh"
   },
   "packageManager": "bun@1.3.14",
   "workspaces": [
