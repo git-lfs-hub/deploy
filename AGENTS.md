@@ -4,6 +4,14 @@ Guidelines to reduce common LLM coding mistakes. Merge with project-specific ins
 
 **Tradeoff:** Bias toward caution over speed. For trivial tasks, use judgment.
 
+## 0. Local dev / debugging
+
+Do NOT spawn a second dev instance (e.g. a second `bun dev` / `wrangler dev` on another port) to
+observe behavior. Dev workers share `persistState` (`server/.wrangler/state`), so two workerd
+processes writing the same Durable Object SQLite file contend → `SQLITE_BUSY`, which corrupts the
+very behavior you're debugging. Instead, add file-based logging to the **already-running** instance
+and read that.
+
 ## 1. Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
